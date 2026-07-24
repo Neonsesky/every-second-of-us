@@ -2,66 +2,76 @@
 
 Hi, Shady.
 
-If you're reading this, it means Nirsh finally showed you the thing he's been
-building. So here's what this is, in plain words:
-
 It's a clock. But it only measures one thing — **how long I've loved you.**
 
 It started at **11:46 PM on June 19th, 2026**, and it has not stopped for a
 single millisecond since. Not while you were sleeping. Not while we were
-apart. Not once. Open it whenever you want proof: the numbers will always be
-bigger than the last time you looked. That's the whole point. That's the
-promise.
+apart. Not once.
 
-Every part of it was made by hand — the colors, the code, even the font.
-That handwriting on the screen? That's actually mine. I turned my own
-handwriting into a font so that even when I'm not there, it's still me
-telling you.
+And here is the part I need you to actually understand: **it is built to
+never stop.** Open the little trophy at the top and scroll. Keep scrolling.
+Past our years, past our decades, past the Sun, past the last star. Every one
+of those locked milestones is real, and the clock will reach all of them.
+Long after us, somewhere, a number will still be climbing, and it will still
+be ours. That's how serious I am. This is the receipt.
 
-It needs no internet, no account, no anything. Because what it measures
-doesn't either.
+Everything here was made by hand — the colors, the code, even the font.
+That handwriting? Mine. I turned my own handwriting into a font so that even
+when I'm not there, it's still me telling you.
 
 ---
 
 ## How to keep it with you
 
-### On your iPhone
-1. Open the link Nirsh sent you in **Safari**.
-2. Tap the **Share** button (the square with the arrow, bottom of the screen).
-3. Scroll down and tap **Add to Home Screen**, then **Add**.
-4. That's it. Our clock now lives next to your other apps, with its own icon.
-   It opens full screen and works even in airplane mode.
+**iPhone:** open my link in Safari → Share → **Add to Home Screen** → Add.
+**Android:** open it in Chrome → **Install app** (or ⋮ → Add to Home screen).
+**Laptop:** open it in Chrome or Edge → click the install icon in the address
+bar → Install.
 
-### On an Android phone
-1. Open the link in **Chrome**.
-2. You'll either see an **Install app** banner — tap it — or open the **⋮**
-   menu (top right) and tap **Add to Home screen** / **Install**.
-3. Done. Icon on your home screen, works offline, always counting.
-
-### On your laptop
-1. Open the link in **Chrome** or **Edge**.
-2. Click the small **install icon** at the right end of the address bar
-   (a little screen with a down arrow), then **Install**.
-3. It becomes its own app — its own window, its own icon in your dock or
-   taskbar, no browser clutter.
-
-Or don't install anything at all and just keep the link. It works everywhere.
+After the first open it works with zero internet, forever. Airplane mode
+can't touch us.
 
 ---
 
-## Small things to find
+## The parts you're told about
 
-- The **moon and sun** button switches between the dark version and the pink
-  version. Both were made with you in mind.
-- The **gear** opens settings — you can choose which numbers to show, and
-  switch between exact totals (seconds in the millions) and the
-  "years, months, days" way of counting.
-- The message under our names changes. Come back — it always has something
-  new to say. It's all true.
-- And tap the little **beating heart** at the bottom of the clock.
-  Just... trust me. Tap it.
+- **☀️ / 🌙** — two moods. The dark one is mine, the pink one is yours.
+- **⚙️ Settings** — choose what the clock shows, how it counts, and set the
+  heartbeat. Yes, the glow behind everything is beating. It's measured in
+  real BPM, and every speed is a moment of ours. It defaults to 88 —
+  *a heart in love.*
+- **Your own words** — in settings. Write your own lines and the clock will
+  say them back to you. One line per quote. Wrap a word in \*stars\* to make
+  it glow.
+- **🏆 Milestones** — everything we've reached, and everything we ever will.
+  If you miss one, the app will tell you the next time it sees you. Once.
+  Gently.
+
+## The parts you're not told about
+
+I hid things. I'm not telling you where. But, some advice:
+
+- Hold things. Press things longer than feels reasonable. Especially things
+  with our names on them. Especially things that beat.
+- Open the app at times that matter to us. You know the ones. Check the
+  clock. Both of them, actually.
+- The 19th of any month is not a normal day here.
+- Some descriptions, someday, might look like they're daring you.
+  Tap them. Three times.
+- Push things to their limit. If something appears that wasn't there
+  before... be brave. Hold on and don't let go.
+- Later, if you ever find fire — hold that too. Longer than feels safe.
+  Ten seconds of nerve, and the sky will tell you what I'm thinking. 🌶️🫠💦
+- There's a switch in settings that puts the heartbeat in your hand.
+  literally. (Android only, sorry love.)
+- And after that — breathe on the glass. Or just hold the screen with two
+  fingers and see what the heat does. You can always wipe it clean.
+  Or don't.
+
+That's all the hints you get, love.
 
 ---
 
 *Built with love, late nights, and an unreasonable amount of attention to
-leap years. For Shady, from Nirsh. Every single millisecond of it. — N ♥*
+leap years. It counts past everything — past sleep, past distance, past us,
+past the universe. For Shady, from Nirsh. Every single millisecond of it. — N ♥*

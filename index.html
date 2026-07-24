@@ -10,14 +10,13 @@
 <meta name="apple-mobile-web-app-title" content="Shady ♥ Nirsh">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32.png">
 <title>Shady ♥ Nirsh — every second of us</title>
-<!-- Link previews (WhatsApp / iMessage / socials).
-     After publishing, replace YOUR-USERNAME and repo name below with your real GitHub Pages URL. -->
+<!-- Link previews. After publishing, replace YOUR-USERNAME/repo below with your real GitHub Pages URL. -->
 <meta property="og:title" content="Shady ♥ Nirsh — every second of us">
 <meta property="og:description" content="A living clock counting every millisecond since June 19th, 2026, 11:46 PM. Made by Nirsh, for Shady.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://Neonsesky.github.io/shady-and-nirsh/icons/og-image.png">
+<meta property="og:image" content="https://YOUR-USERNAME.github.io/shady-and-nirsh/icons/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <style>
 /* Nirsh's own handwriting, embedded — works fully offline */
@@ -31,19 +30,15 @@
   --font-hand: "Nirsh", "Georgia", serif;
   --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-  /* Light — wholesome, bright, baby pinks + soft multicolor */
   --bg: #fff8fb;
   --ink: #421f2e;
   --ink-soft: #96687a;
   --accent: #ff4d85;
   --accent-hot: #ff2e70;
-  --aur-1: #ffb3d4;
-  --aur-2: #cdb6ff;
-  --aur-3: #a9d9ff;
-  --aur-4: #ffd4b0;
-  --aur-5: #ff8ab8;
+  --aur-1: #ffb3d4; --aur-2: #cdb6ff; --aur-3: #a9d9ff; --aur-4: #ffd4b0; --aur-5: #ff8ab8;
   --veil: rgba(255, 248, 251, 0);
   --glass: rgba(255, 255, 255, 0.45);
+  --glass-strong: rgba(255, 255, 255, 0.82);
   --glass-border: rgba(255, 255, 255, 0.85);
   --shadow: 0 20px 55px -20px rgba(255, 46, 112, 0.28);
   --track: rgba(66, 31, 46, 0.14);
@@ -51,6 +46,7 @@
   --grain-opacity: 0.045;
   --aur-blur: 70px;
   --aur-sat: 1;
+  --rose-gold: #d98e77;
 }
 
 [data-theme="dark"] {
@@ -59,13 +55,10 @@
   --ink-soft: #9b8d90;
   --accent: #ff3b4e;
   --accent-hot: #ff5c62;
-  --aur-1: #16279b;
-  --aur-2: #5b21b6;
-  --aur-3: #c2178a;
-  --aur-4: #ff2e5f;
-  --aur-5: #ff5a2a;
+  --aur-1: #16279b; --aur-2: #5b21b6; --aur-3: #c2178a; --aur-4: #ff2e5f; --aur-5: #ff5a2a;
   --veil: rgba(8, 7, 10, 0.55);
   --glass: rgba(12, 10, 13, 0.35);
+  --glass-strong: rgba(16, 13, 15, 0.88);
   --glass-border: rgba(255, 255, 255, 0.1);
   --shadow: 0 20px 55px -20px rgba(0, 0, 0, 0.75);
   --track: rgba(245, 237, 238, 0.15);
@@ -73,6 +66,16 @@
   --grain-opacity: 0.07;
   --aur-blur: 80px;
   --aur-sat: 1.25;
+  --rose-gold: #e8a68c;
+}
+
+/* AFTER DARK — the lights go low */
+body[data-afterdark="1"][data-theme="dark"] {
+  --accent: #ff2440;
+  --accent-hot: #ff4b5c;
+  --aur-1: #2b070d; --aur-2: #57101c; --aur-3: #8f1023; --aur-4: #c11430; --aur-5: #ff2e3f;
+  --grain-opacity: 0.11;
+  --aur-sat: 1.35;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -89,8 +92,9 @@ body {
   flex-direction: column;
 }
 
-/* ---------- aurora ---------- */
-.aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; filter: saturate(var(--aur-sat)); }
+/* ---------- aurora + heartbeat pulse layer ---------- */
+.pulse-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; will-change: transform, filter; }
+.aurora { position: absolute; inset: 0; overflow: hidden; pointer-events: none; filter: saturate(var(--aur-sat)); }
 .aur { position: absolute; border-radius: 50%; filter: blur(var(--aur-blur)); will-change: transform; transition: background 0.8s ease; }
 .aur.one   { width: 90vmax; height: 60vmax; left: -25vmax; bottom: -30vmax; background: radial-gradient(closest-side, var(--aur-4), transparent 70%); animation: swayA 34s ease-in-out infinite alternate; }
 .aur.two   { width: 80vmax; height: 55vmax; right: -25vmax; bottom: -28vmax; background: radial-gradient(closest-side, var(--aur-5), transparent 70%); animation: swayB 41s ease-in-out infinite alternate; }
@@ -102,13 +106,13 @@ body {
 @keyframes swayC { to { transform: translate(-7vmax, 5vmax) rotate(12deg) scale(0.92); } }
 @keyframes swayD { to { transform: translate(8vmax, 7vmax) rotate(-8deg)  scale(1.1); } }
 @keyframes swayE { to { transform: translate(-6vmax, -8vmax) rotate(9deg) scale(0.95); } }
+body[data-afterdark="1"] .aur { animation-duration: 48s, 58s, 66s, 74s, 62s; }
 
 .veil {
   position: fixed; inset: 0; z-index: 1; pointer-events: none;
   background: linear-gradient(to bottom, var(--bg) 0%, var(--veil) 34%, transparent 62%);
   transition: background 0.6s ease;
 }
-
 .grain {
   position: fixed; inset: -50%; width: 200%; height: 200%; z-index: 2;
   pointer-events: none; opacity: var(--grain-opacity);
@@ -127,21 +131,30 @@ body {
   display: flex; flex-direction: column; align-items: center;
   padding: max(16px, env(safe-area-inset-top)) 16px 16px;
   width: 100%; max-width: 900px; margin: 0 auto;
+  transition: filter 0.4s ease;
+}
+body.melting .app { filter: blur(0.6px); }
+body.melting .message, body.melting .eyebrow { animation: melt 1.6s ease-in-out infinite alternate; }
+@keyframes melt {
+  0% { transform: skewX(0deg) scaleY(1); }
+  100% { transform: skewX(-1.6deg) scaleY(1.015); }
 }
 
 .topbar {
   width: 100%; display: flex; align-items: center; justify-content: space-between;
   gap: 10px; margin-bottom: clamp(26px, 6vh, 60px);
 }
-
 .eyebrow {
   font-family: var(--font-hand);
-  font-size: clamp(20px, 5vw, 26px);
+  font-size: clamp(19px, 4.6vw, 26px);
   color: var(--ink);
   display: flex; align-items: baseline; gap: 8px;
-  user-select: none; line-height: 1; padding-top: 4px;
+  user-select: none; -webkit-user-select: none; line-height: 1.15; padding-top: 4px;
+  cursor: default; touch-action: manipulation;
 }
 .eyebrow .amp { color: var(--accent); font-family: var(--font-ui); font-size: 0.8em; }
+.eyebrow.rosegold { color: var(--rose-gold); }
+.eyebrow.rosegold .amp { color: var(--rose-gold); }
 
 .iconbtn {
   width: 44px; height: 44px; border-radius: 16px;
@@ -153,11 +166,14 @@ body {
   display: grid; place-items: center; font-size: 18px;
   transition: transform 0.2s ease, background 0.3s ease;
   box-shadow: var(--shadow); flex-shrink: 0;
+  user-select: none; -webkit-user-select: none;
 }
 .iconbtn:hover { transform: translateY(-2px); }
 .iconbtn:active { transform: scale(0.94); }
-button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.controls { display: flex; gap: 10px; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.controls { display: flex; gap: 9px; }
+#flameBtn { display: none; }
+body[data-afterdark="1"] #flameBtn { display: grid; }
 
 /* ---------- rotating message ---------- */
 .message {
@@ -170,14 +186,27 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
   margin: 0 auto clamp(26px, 5.5vh, 48px);
   min-height: 2.6em;
   transition: opacity 0.6s ease, transform 0.6s ease;
+  user-select: none; -webkit-user-select: none;
 }
 .message.fading { opacity: 0; transform: translateY(8px); }
 .message em { font-style: normal; color: var(--accent); }
 
-/* ---------- the clock: one quiet glass panel, minimal rows ---------- */
+/* whisper mode */
+#whisperVeil {
+  position: fixed; inset: 0; z-index: 35; pointer-events: none;
+  background: #000; opacity: 0; transition: opacity 0.5s ease;
+}
+body.whisper #whisperVeil { opacity: 0.93; }
+body.whisper .message {
+  position: relative; z-index: 36;
+  color: #ffd9cf;
+  text-shadow: 0 0 22px rgba(255, 120, 90, 0.55), 0 0 60px rgba(255, 60, 60, 0.35);
+}
+body.whisper .message em { color: #ff8f7a; }
+
+/* ---------- the clock ---------- */
 .clock {
-  width: 100%;
-  max-width: 520px;
+  width: 100%; max-width: 520px;
   border-radius: 28px;
   border: 1px solid var(--glass-border);
   background: var(--glass);
@@ -188,73 +217,84 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); ou
   transition: background 0.4s ease;
 }
 .row-unit {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 17px 2px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  padding: 16px 2px;
   border-top: 1px solid var(--hairline);
 }
 .row-unit.first-visible { border-top: none; }
 .row-unit.hidden-unit { display: none; }
 .row-unit .label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  white-space: nowrap;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--ink-soft); white-space: nowrap;
 }
 .row-unit .value {
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
   font-size: clamp(24px, 6.4vw, 34px);
-  font-weight: 650;
-  letter-spacing: -0.015em;
-  line-height: 1;
-  text-align: right;
-  overflow-wrap: anywhere;
+  font-weight: 650; letter-spacing: -0.015em; line-height: 1;
+  text-align: right; overflow-wrap: anywhere;
 }
 .row-unit[data-unit="milliseconds"] .value { color: var(--accent); }
 
 .counting {
-  margin-top: 20px;
-  font-size: 14px;
-  color: var(--ink-soft);
-  display: flex; align-items: center; gap: 8px;
-  user-select: none;
+  margin-top: 20px; font-size: 14px; color: var(--ink-soft);
+  display: flex; align-items: center; gap: 8px; user-select: none; -webkit-user-select: none;
 }
 .heart {
-  display: inline-block;
-  color: var(--accent-hot);
+  display: inline-block; color: var(--accent-hot);
   animation: beat 1s ease-in-out infinite;
-  transform-origin: center;
-  font-size: 16px;
-  cursor: pointer;
+  transform-origin: center; font-size: 17px; cursor: pointer;
+  touch-action: none;
 }
 @keyframes beat {
   0%,100% { transform: scale(1); } 12% { transform: scale(1.25); }
   24% { transform: scale(1); } 36% { transform: scale(1.18); } 50% { transform: scale(1); }
 }
+#holdBpm {
+  font-variant-numeric: tabular-nums; font-size: 12px; color: var(--accent);
+  min-width: 88px; display: none;
+}
+body.hearthold #holdBpm { display: inline; }
 
 /* ---------- footer ---------- */
 footer {
   position: relative; z-index: 3; margin-top: auto;
   padding: clamp(38px, 7vh, 70px) 22px calc(30px + env(safe-area-inset-bottom));
-  text-align: center; max-width: 600px;
-  margin-left: auto; margin-right: auto;
+  text-align: center; max-width: 620px; margin-left: auto; margin-right: auto;
 }
 footer .line { width: 44px; height: 2px; border-radius: 2px; background: var(--accent); margin: 0 auto 18px; opacity: 0.75; }
 footer p { font-size: 14px; line-height: 1.75; color: var(--ink-soft); }
+footer p + p { margin-top: 10px; }
 footer p strong { color: var(--ink); font-weight: 600; }
-footer .sig {
-  font-family: var(--font-hand);
-  margin-top: 16px;
-  font-size: clamp(19px, 4.5vw, 24px);
-  color: var(--ink);
-}
+footer .sig { font-family: var(--font-hand); margin-top: 16px; font-size: clamp(19px, 4.5vw, 24px); color: var(--ink); }
 
-/* ---------- settings ---------- */
+/* ---------- popup card ---------- */
+#popupWrap {
+  position: fixed; z-index: 70; left: 0; right: 0;
+  top: calc(max(16px, env(safe-area-inset-top)) + 60px);
+  display: flex; justify-content: center; padding: 0 18px;
+  pointer-events: none;
+}
+.popup {
+  pointer-events: auto; cursor: pointer;
+  max-width: 420px; width: 100%;
+  border-radius: 22px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-strong);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  box-shadow: var(--shadow);
+  padding: 16px 20px;
+  opacity: 0; transform: translateY(-14px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.32, 0.72, 0.24, 1);
+}
+.popup.show { opacity: 1; transform: translateY(0); }
+.popup .kicker {
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+}
+.popup .body { font-family: var(--font-hand); font-size: clamp(18px, 4.6vw, 22px); line-height: 1.4; }
+
+/* ---------- sheets (settings / quotes / milestones) ---------- */
 .scrim {
   position: fixed; inset: 0; z-index: 40;
   background: rgba(0,0,0,0.4);
@@ -262,27 +302,25 @@ footer .sig {
   transition: opacity 0.35s ease;
 }
 .scrim.open { opacity: 1; pointer-events: auto; }
-
 .drawer {
   position: fixed; z-index: 50;
   left: 0; right: 0; bottom: 0;
-  max-height: 84dvh;
+  max-height: 86dvh;
   transform: translateY(106%);
   transition: transform 0.45s cubic-bezier(0.32, 0.72, 0.24, 1);
-  border: 1px solid var(--glass-border);
-  border-bottom: none;
+  border: 1px solid var(--glass-border); border-bottom: none;
   border-radius: 26px 26px 0 0;
   background: var(--bg);
-  padding: 20px 22px calc(24px + env(safe-area-inset-bottom));
+  padding: 18px 22px calc(24px + env(safe-area-inset-bottom));
   overflow-y: auto;
-  display: flex; flex-direction: column; gap: 24px;
+  display: flex; flex-direction: column; gap: 22px;
 }
 .drawer.open { transform: translateY(0); }
 .drawer .grab { width: 40px; height: 4px; border-radius: 4px; background: var(--track); margin: 0 auto; flex-shrink: 0; }
 @media (min-width: 720px) {
   .drawer {
     left: auto; top: 0; bottom: 0;
-    width: 380px; max-height: none; height: 100dvh;
+    width: 400px; max-height: none; height: 100dvh;
     border-radius: 0; border: none; border-left: 1px solid var(--glass-border);
     transform: translateX(106%);
     padding: 26px 24px;
@@ -290,22 +328,20 @@ footer .sig {
   .drawer.open { transform: translateX(0); }
   .drawer .grab { display: none; }
 }
-
 .drawer h2 { font-family: var(--font-hand); font-size: 28px; font-weight: 400; }
-.drawer .section-title {
+.section-title {
   font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
   text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px;
 }
 .drawer-head { display: flex; align-items: center; justify-content: space-between; }
-
 .row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--track);
-  font-size: 15px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 0; border-bottom: 1px solid var(--track); font-size: 15px;
 }
 .row:last-child { border-bottom: none; }
 .row .sub { display: block; font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.row.linkrow { cursor: pointer; }
+.row.linkrow .chev { color: var(--ink-soft); }
 
 .switch { position: relative; display: inline-block; width: 48px; height: 28px; flex-shrink: 0; }
 .switch input { opacity: 0; width: 100%; height: 100%; position: absolute; cursor: pointer; z-index: 2; margin: 0; }
@@ -320,35 +356,188 @@ footer .sig {
 .switch input:checked + .knob::before { transform: translateX(20px); }
 .switch input:focus-visible + .knob { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.datefield {
+.datefield, textarea.field {
   width: 100%; padding: 13px 14px; border-radius: 14px;
   border: 1px solid var(--track);
   background: transparent; color: var(--ink);
   font-family: var(--font-ui); font-size: 15px;
   color-scheme: light;
 }
-[data-theme="dark"] .datefield { color-scheme: dark; }
+[data-theme="dark"] .datefield, [data-theme="dark"] textarea.field { color-scheme: dark; }
+textarea.field { min-height: 130px; resize: vertical; line-height: 1.6; }
 
 .btn {
   width: 100%; padding: 13px 16px; border-radius: 14px; border: none;
   background: var(--accent); color: #fff;
   font-family: var(--font-ui); font-size: 15px; font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.15s ease, filter 0.2s ease;
+  cursor: pointer; transition: transform 0.15s ease, filter 0.2s ease;
 }
 .btn:hover { filter: brightness(1.06); }
 .btn:active { transform: scale(0.97); }
 .btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--track); margin-top: 10px; }
+.btn.danger { background: transparent; color: #c03030; border: 1px solid rgba(192,48,48,0.4); }
 .hint { font-size: 12.5px; color: var(--ink-soft); line-height: 1.6; margin-top: 10px; }
 
-.float-heart {
-  position: fixed; z-index: 60; pointer-events: none; font-size: 22px;
-  animation: floatUp 2.6s ease-out forwards;
+/* ---------- BPM slider ---------- */
+.bpm-wrap { padding: 4px 0 2px; }
+.bpm-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.bpm-name { font-family: var(--font-hand); font-size: 22px; }
+.bpm-num { font-variant-numeric: tabular-nums; font-size: 13px; color: var(--accent); font-weight: 700; }
+.bpm-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.55; margin-top: 3px; min-height: 2.6em; }
+body[data-afterdark="1"] .bpm-desc.spicy-stop {
+  cursor: pointer;
+  text-decoration: underline dotted var(--accent);
+  text-underline-offset: 3px;
 }
+input[type="range"].bpm {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 28px; background: transparent; margin-top: 8px;
+}
+input[type="range"].bpm::-webkit-slider-runnable-track {
+  height: 6px; border-radius: 6px;
+  background: linear-gradient(to right, var(--track), var(--accent));
+}
+input[type="range"].bpm::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--bg);
+  margin-top: -9px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); cursor: pointer;
+}
+input[type="range"].bpm::-moz-range-track {
+  height: 6px; border-radius: 6px;
+  background: linear-gradient(to right, var(--track), var(--accent));
+}
+input[type="range"].bpm::-moz-range-thumb {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--bg); cursor: pointer;
+}
+.bpm-row { display: flex; align-items: center; gap: 10px; }
+.bpm-row input[type="range"] { flex: 1; }
+
+/* the chilli */
+#chilli {
+  display: none;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: none; background: transparent;
+  font-size: 21px; cursor: pointer; position: relative;
+  opacity: 0.55; flex-shrink: 0;
+  transition: opacity 0.8s ease, transform 0.2s ease, filter 0.3s ease;
+  user-select: none; -webkit-user-select: none; touch-action: none;
+}
+#chilli.revealed { display: block; animation: chilliIn 1.2s ease; }
+@keyframes chilliIn { from { opacity: 0; transform: scale(0.4) rotate(-30deg); } }
+#chilli.hinting { animation: wiggle 0.5s ease; }
+@keyframes wiggle {
+  0%,100% { transform: rotate(0); } 25% { transform: rotate(-14deg) scale(1.1); }
+  75% { transform: rotate(12deg) scale(1.1); }
+}
+#chilli .ring {
+  position: absolute; inset: -4px;
+  border-radius: 50%; pointer-events: none;
+  transform: rotate(-90deg);
+}
+#chilli .ring circle {
+  fill: none; stroke: var(--accent); stroke-width: 2.5;
+  stroke-dasharray: 151; stroke-dashoffset: 151;
+}
+#chilli.igniting { filter: drop-shadow(0 0 8px rgba(255,90,30,0.9)) drop-shadow(0 0 20px rgba(255,40,40,0.6)); opacity: 1; }
+
+/* quote chips */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  max-width: 100%;
+  padding: 7px 11px; border-radius: 999px;
+  border: 1px solid var(--track);
+  font-size: 12.5px; color: var(--ink-soft);
+}
+.chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
+.chip button { border: none; background: none; color: var(--accent); cursor: pointer; font-size: 14px; padding: 0; }
+
+/* ---------- milestones ---------- */
+.ms-intro { font-size: 13.5px; line-height: 1.7; color: var(--ink-soft); }
+.ms-intro strong { color: var(--ink); }
+.ms-list { display: flex; flex-direction: column; gap: 10px; }
+.ms-item {
+  display: flex; align-items: center; gap: 13px;
+  padding: 13px 15px; border-radius: 18px;
+  border: 1px solid var(--track);
+}
+.ms-item .ico {
+  width: 36px; height: 36px; border-radius: 12px; flex-shrink: 0;
+  display: grid; place-items: center; font-size: 16px; color: #fff;
+}
+.ms-item .t { font-size: 14.5px; font-weight: 600; line-height: 1.3; }
+.ms-item .s { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.ms-item.locked { opacity: 0.55; }
+.ms-item.locked .ico { background: var(--track) !important; color: var(--ink-soft); }
+.ms-item.done { border-color: transparent; background: var(--glass); }
+.tier-rose .ico { background: linear-gradient(135deg, #ff8ab8, #ff4d85); }
+.tier-gold .ico { background: linear-gradient(135deg, #e8b46a, #d98e50); }
+.tier-crimson .ico { background: linear-gradient(135deg, #ff4b5c, #b3122c); }
+.tier-violet .ico { background: linear-gradient(135deg, #8b5cf6, #4c1d95); }
+.tier-cosmic .ico { background: linear-gradient(135deg, #1e293b, #0b0f1c); border: 1px solid #475569; }
+
+/* ---------- floating hearts (nice ones) ---------- */
+.float-heart {
+  position: fixed; z-index: 80; pointer-events: none;
+  animation: floatUp var(--dur, 3.2s) ease-out forwards;
+  filter: blur(0.3px) drop-shadow(0 0 10px rgba(255, 80, 110, 0.65));
+}
+.float-heart svg { display: block; }
 @keyframes floatUp {
-  0% { opacity: 0; transform: translateY(0) scale(0.6) rotate(0deg); }
-  12% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(-46vh) scale(1.15) rotate(14deg); }
+  0% { opacity: 0; transform: translateY(0) scale(0.5) rotate(0deg); }
+  10% { opacity: 0.95; }
+  100% { opacity: 0; transform: translateY(-56vh) scale(1.2) rotate(var(--rot, 12deg)); }
+}
+
+/* ---------- steam canvas ---------- */
+#steam {
+  position: fixed; inset: 0; z-index: 30;
+  pointer-events: none; display: none;
+  touch-action: none;
+}
+#steam.active { display: block; pointer-events: auto; }
+
+/* ---------- burn mode: blurred flames behind everything ---------- */
+.flames { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0; overflow: hidden; }
+.flame {
+  position: absolute; border-radius: 50%;
+  filter: blur(55px); will-change: transform;
+  mix-blend-mode: screen;
+}
+.flame.f1 { width: 46vmax; height: 60vmax; left: -8vmax;  bottom: -34vmax; background: radial-gradient(closest-side, #ff5a00, transparent 70%); animation: flick1 1.3s ease-in-out infinite alternate; }
+.flame.f2 { width: 40vmax; height: 56vmax; left: 24vmax;  bottom: -30vmax; background: radial-gradient(closest-side, #ff9500, transparent 70%); animation: flick2 1.05s ease-in-out infinite alternate; }
+.flame.f3 { width: 44vmax; height: 62vmax; right: -6vmax; bottom: -34vmax; background: radial-gradient(closest-side, #ff2e00, transparent 70%); animation: flick3 1.5s ease-in-out infinite alternate; }
+.flame.f4 { width: 30vmax; height: 46vmax; left: 44vmax;  bottom: -24vmax; background: radial-gradient(closest-side, #ffc400, transparent 70%); animation: flick4 0.85s ease-in-out infinite alternate; }
+@keyframes flick1 { to { transform: translateY(-7vmax) scaleX(1.12) scaleY(1.2); } }
+@keyframes flick2 { to { transform: translate(2vmax, -9vmax) scaleY(1.28); } }
+@keyframes flick3 { to { transform: translateY(-6vmax) scaleX(0.9) scaleY(1.22); } }
+@keyframes flick4 { to { transform: translate(-2vmax, -10vmax) scaleY(1.35) scaleX(1.15); } }
+
+.rain-emoji {
+  position: fixed; top: -50px; z-index: 85; pointer-events: none;
+  font-size: var(--fs, 24px);
+  animation: rainFall var(--dur, 2.8s) linear forwards;
+}
+@keyframes rainFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(115vh) rotate(var(--rot, 24deg)); opacity: 0.7; }
+}
+
+/* ---------- bpm stop dots (the slider visibly "grows" in After Dark) ---------- */
+.bpm-dots { position: relative; height: 12px; margin: 2px 2px 0; }
+.bpm-dot {
+  position: absolute; top: 3px; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--track); transform: translateX(-50%);
+}
+.bpm-dot.spicy { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+.bpm-dot.pop { animation: dotPop 0.6s cubic-bezier(0.34, 1.6, 0.64, 1) backwards; }
+@keyframes dotPop { from { transform: translateX(-50%) scale(0); } }
+.bpm-wrap.expanded { animation: bpmExpand 0.9s ease; }
+@keyframes bpmExpand {
+  0% { transform: scale(1); } 35% { transform: scale(1.03); } 100% { transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -360,20 +549,28 @@ footer .sig {
 </head>
 <body data-theme="dark">
 
-<div class="aurora" aria-hidden="true">
-  <div class="aur four"></div>
-  <div class="aur five"></div>
-  <div class="aur three"></div>
-  <div class="aur one"></div>
-  <div class="aur two"></div>
+<div class="pulse-layer" id="pulseLayer">
+  <div class="aurora" aria-hidden="true">
+    <div class="aur four"></div><div class="aur five"></div><div class="aur three"></div>
+    <div class="aur one"></div><div class="aur two"></div>
+  </div>
+</div>
+<div class="flames" id="flames" aria-hidden="true">
+  <div class="flame f1"></div><div class="flame f2"></div><div class="flame f3"></div><div class="flame f4"></div>
 </div>
 <div class="veil" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
+<div id="whisperVeil" aria-hidden="true"></div>
+<canvas id="steam"></canvas>
 
 <main class="app">
   <div class="topbar">
-    <div class="eyebrow">Shady <span class="amp">♥</span> Nirsh</div>
+    <div class="eyebrow" id="eyebrow">Shady <span class="amp">♥</span> Nirsh</div>
     <div class="controls">
+      <button class="iconbtn" id="flameBtn" aria-label="Hold to turn up the heat" title="Hold me">🌶️</button>
+      <button class="iconbtn" id="msBtn" aria-label="Our milestones" title="Milestones">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      </button>
       <button class="iconbtn" id="themeBtn" aria-label="Switch between light and dark mode" title="Light / dark">☀️</button>
       <button class="iconbtn" id="settingsBtn" aria-label="Open settings" title="Settings">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09a1.7 1.7 0 0 0 1.55-1 1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h0a1.7 1.7 0 0 0 1-1.55V3a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1 1.55h0a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v0a1.7 1.7 0 0 0 1.55 1H21a2 2 0 1 1 0 4h-.09a1.7 1.7 0 0 0-1.55 1z"/></svg>
@@ -394,7 +591,11 @@ footer .sig {
     <div class="row-unit" data-unit="milliseconds"><span class="label">Milliseconds</span><span class="value" id="v-milliseconds">0</span></div>
   </section>
 
-  <div class="counting"><span class="heart" id="heartBtn" role="button" tabindex="0" aria-label="A beating heart. Tap it.">♥</span> and counting, always</div>
+  <div class="counting">
+    <span class="heart" id="heartBtn" role="button" tabindex="0" aria-label="A beating heart. Tap it. Or hold it.">♥</span>
+    and counting, always
+    <span id="holdBpm"></span>
+  </div>
 </main>
 
 <footer>
@@ -404,15 +605,43 @@ footer .sig {
     Nirsh built this by hand — every pixel, every heartbeat of it, even the handwriting — for one person only.
     It doesn't need the internet, because what it measures doesn't either.
   </p>
+  <p>
+    And Shady — understand this part: <strong>it is built to never stop.</strong> It will keep counting while we sleep,
+    while we're apart, after we're gone, after the last star burns out. Some things end. This number doesn't.
+  </p>
   <p class="sig">For Shady. Every single millisecond of it. — N ♥</p>
 </footer>
 
+<!-- popup -->
+<div id="popupWrap"><div class="popup" id="popup"><div class="kicker" id="popKicker"></div><div class="body" id="popBody"></div></div></div>
+
+<!-- scrims + sheets -->
 <div class="scrim" id="scrim"></div>
+
 <aside class="drawer" id="drawer" aria-label="Settings">
   <div class="grab" aria-hidden="true"></div>
-  <div class="drawer-head">
-    <h2>Settings</h2>
-    <button class="iconbtn" id="closeBtn" aria-label="Close settings">✕</button>
+  <div class="drawer-head"><h2>Settings</h2><button class="iconbtn" id="closeBtn" aria-label="Close settings">✕</button></div>
+
+  <div>
+    <div class="section-title">Heartbeat</div>
+    <div class="bpm-wrap">
+      <div class="bpm-top"><span class="bpm-name" id="bpmName"></span><span class="bpm-num" id="bpmNum"></span></div>
+      <div class="bpm-desc" id="bpmDesc"></div>
+      <div class="bpm-row">
+        <input type="range" class="bpm" id="bpmSlider" min="50" max="170" step="1" aria-label="Heartbeat speed in beats per minute">
+        <button id="chilli" aria-label="A chilli. It looks like it wants something."><svg class="ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/></svg>🌶️</button>
+      </div>
+      <div class="bpm-dots" id="bpmDots" aria-hidden="true"></div>
+      <p class="hint" id="bpmHint">The glow behind everything beats like a real heart — this sets whose moment it's living in. Measured in BPM, beats per minute.</p>
+    </div>
+    <label class="row" id="vibeRow">
+      <span>Pulse in your hand<span class="sub">The phone vibrates in sync with the heartbeat (Android only — iPhones don't allow it)</span></span>
+      <span class="switch"><input type="checkbox" id="vibeToggle"><span class="knob"></span></span>
+    </label>
+    <label class="row" id="adRow" style="display:none">
+      <span>After Dark<span class="sub">The lights go low. Everything gets a little less innocent.</span></span>
+      <span class="switch"><input type="checkbox" id="adToggle"><span class="knob"></span></span>
+    </label>
   </div>
 
   <div>
@@ -429,53 +658,90 @@ footer .sig {
   </div>
 
   <div>
+    <div class="section-title">Words</div>
+    <div class="row linkrow" id="openQuotes" role="button" tabindex="0">
+      <span>Your own words<span class="sub" id="quoteCount"></span></span>
+      <span class="chev">→</span>
+    </div>
+  </div>
+
+  <div>
     <div class="section-title">The moment it all began</div>
     <input class="datefield" type="datetime-local" id="dateInput" step="60">
     <button class="btn" id="saveDate" style="margin-top:12px">Save this moment</button>
     <button class="btn ghost" id="resetDate">Reset to our day — Jun 19, 2026, 11:46 PM</button>
     <p class="hint">The clock counts real calendar time — leap years, long months, short months, all of it. Down to the millisecond.</p>
   </div>
+
+  <div id="resetAllWrap" style="display:none">
+    <div class="section-title">Start over</div>
+    <button class="btn danger" id="resetAll">Reset everything to default</button>
+    <p class="hint">Puts every setting back the way Nirsh gifted it — including locking After Dark again, if you'd like to earn it twice.</p>
+  </div>
+</aside>
+
+<aside class="drawer" id="quotesSheet" aria-label="Your own words">
+  <div class="grab" aria-hidden="true"></div>
+  <div class="drawer-head"><h2>Your own words</h2><button class="iconbtn" id="closeQuotes" aria-label="Close">✕</button></div>
+  <div>
+    <p class="hint" style="margin:0 0 10px">One line becomes one quote — paste as many as you like at once. Start each with "...since" and wrap one word in *asterisks* to make it glow.</p>
+    <textarea class="field" id="quoteBox" placeholder="...since you read this and *smiled*&#10;...since we started writing these *together*"></textarea>
+    <button class="btn" id="addQuotes" style="margin-top:12px">Add these words</button>
+    <label class="row" style="margin-top:8px">
+      <span>Only show mine<span class="sub">Hide the built-in lines and use only yours</span></span>
+      <span class="switch"><input type="checkbox" id="onlyMine"><span class="knob"></span></span>
+    </label>
+    <div class="chips" id="quoteChips"></div>
+  </div>
+</aside>
+
+<aside class="drawer" id="msSheet" aria-label="Our milestones">
+  <div class="grab" aria-hidden="true"></div>
+  <div class="drawer-head"><h2>Our milestones</h2><button class="iconbtn" id="closeMs" aria-label="Close">✕</button></div>
+  <p class="ms-intro">
+    Every milestone we will ever reach — and Shady, I mean <strong>ever</strong>. Scroll down. Keep scrolling.
+    The locked ones aren't decoration: the clock is built to reach every single one of them.
+    It keeps counting while we sleep, while we argue, while we're old, and long, long after —
+    past the Sun, past the last star, past the universe itself. <strong>That's how long you're loved. This is the receipt.</strong>
+  </p>
+  <div class="ms-list" id="msList"></div>
 </aside>
 
 <script>
 (function () {
   "use strict";
 
-  /* ---------- safe storage ---------- */
+  /* ================= storage ================= */
   var mem = {};
   var store = {
     get: function (k) { try { return localStorage.getItem(k); } catch (e) { return mem[k] !== undefined ? mem[k] : null; } },
-    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { mem[k] = v; } }
+    set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { mem[k] = v; } },
+    del: function (k) { try { localStorage.removeItem(k); } catch (e) { delete mem[k]; } }
   };
+  var ALL_KEYS = ["sn_start","sn_units","sn_mode","sn_theme","sn_bpm","sn_ad_unlocked","sn_ad_on","sn_custom_quotes","sn_only_mine","sn_ms_ack","sn_vibe"];
 
-  /* ---------- state ---------- */
-  var DEFAULT_START = new Date(2026, 5, 19, 23, 46, 0, 0); // June 19, 2026, 11:46 PM local
-  var UNITS = ["years", "months", "weeks", "days", "hours", "minutes", "seconds", "milliseconds"];
-  var DEFAULT_VISIBLE = { years: true, months: true, weeks: false, days: true, hours: true, minutes: true, seconds: true, milliseconds: false };
+  /* ================= state ================= */
+  var DEFAULT_START = new Date(2026, 5, 19, 23, 46, 0, 0);
+  var UNITS = ["years","months","weeks","days","hours","minutes","seconds","milliseconds"];
+  var DEFAULT_VISIBLE = { years:true, months:true, weeks:false, days:true, hours:true, minutes:true, seconds:true, milliseconds:true };
 
   var startDate = (function () {
-    var saved = store.get("sn_start");
-    if (saved) {
-      var d = new Date(parseInt(saved, 10));
-      if (!isNaN(d.getTime())) return d;
-    }
+    var s = store.get("sn_start");
+    if (s) { var d = new Date(parseInt(s,10)); if (!isNaN(d.getTime())) return d; }
     return DEFAULT_START;
   })();
-
   var visible = (function () {
-    var saved = store.get("sn_units");
-    if (saved) { try { return JSON.parse(saved); } catch (e) {} }
-    var o = {};
-    UNITS.forEach(function (u) { o[u] = DEFAULT_VISIBLE[u]; });
-    return o;
+    var s = store.get("sn_units");
+    if (s) { try { return JSON.parse(s); } catch (e) {} }
+    var o = {}; UNITS.forEach(function (u) { o[u] = DEFAULT_VISIBLE[u]; }); return o;
   })();
+  var totalsMode = (function () { var s = store.get("sn_mode"); return s === null ? true : s === "totals"; })();
+  var adUnlocked = store.get("sn_ad_unlocked") === "1";
+  var adOn = store.get("sn_ad_on") === "1";
+  var customQuotes = (function () { var s = store.get("sn_custom_quotes"); if (s) { try { return JSON.parse(s); } catch (e) {} } return []; })();
+  var onlyMine = store.get("sn_only_mine") === "1";
 
-  var totalsMode = (function () {
-    var saved = store.get("sn_mode");
-    return saved === null ? true : saved === "totals";
-  })();
-
-  /* ---------- theme ---------- */
+  /* ================= theme + after dark ================= */
   var themeBtn = document.getElementById("themeBtn");
   function applyTheme(t) {
     document.body.setAttribute("data-theme", t);
@@ -489,44 +755,127 @@ footer .sig {
     applyTheme(document.body.getAttribute("data-theme") === "dark" ? "light" : "dark");
   });
 
-  /* ---------- calendar-accurate math ---------- */
+  var wasAD = false;
+  function applyAfterDark() {
+    var nowAD = adOn && adUnlocked;
+    document.body.setAttribute("data-afterdark", nowAD ? "1" : "0");
+    store.set("sn_ad_on", adOn ? "1" : "0");
+    refreshBpmStops();
+    renderBpm();
+    renderDots(nowAD && !wasAD);
+    var hint = document.getElementById("bpmHint");
+    if (hint) hint.textContent = nowAD
+      ? "It goes further now. Six new stops appeared on the dial — the red ones. Explore."
+      : "The glow behind everything beats like a real heart — this sets whose moment it's living in. Measured in BPM, beats per minute.";
+    if (nowAD && !wasAD) {
+      var wrap = document.querySelector(".bpm-wrap");
+      if (wrap) { wrap.classList.remove("expanded"); void wrap.offsetWidth; wrap.classList.add("expanded"); }
+    }
+    wasAD = nowAD;
+  }
+  function renderDots(animateNew) {
+    var wrap = document.getElementById("bpmDots");
+    if (!wrap) return;
+    wrap.innerHTML = "";
+    stops.forEach(function (s, i) {
+      var d = document.createElement("span");
+      d.className = "bpm-dot" + (s.spicy ? " spicy" : "");
+      if (s.spicy && animateNew) {
+        d.classList.add("pop");
+        d.style.animationDelay = (i * 70) + "ms";
+      }
+      d.style.left = ((s.bpm - 50) / 120 * 100) + "%";
+      wrap.appendChild(d);
+    });
+  }
+  function isAD() { return adOn && adUnlocked; }
+
+  /* ================= heartbeat engine ================= */
+  var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var SWEET_STOPS = [
+    { bpm: 60,  name: "Resting, safe",     desc: "lying tangled up, half-asleep, nowhere to be" },
+    { bpm: 72,  name: "At ease with you",  desc: "the calm of just being near each other" },
+    { bpm: 88,  name: "In love",           desc: "the little flutter when you walk into the room" },
+    { bpm: 100, name: "Butterflies",       desc: "our first date, all over again" },
+    { bpm: 115, name: "Can't-wait",        desc: "counting down the minutes till I see you" },
+    { bpm: 130, name: "Close",             desc: "pulled in, foreheads touching" },
+    { bpm: 145, name: "Kissing you",       desc: "the one that makes the room disappear" },
+    { bpm: 160, name: "Breathless",        desc: "when I forget how to form a sentence" }
+  ];
+  var SPICY_STOPS = [
+    { bpm: 98,  name: "Afterglow",      desc: "both of us gasping for air after we fuck, grinning at the ceiling", alt: "wrecked, tangled, and already thinking about round two", spicy: true },
+    { bpm: 105, name: "Teasing",        desc: "your hand somewhere it has no business being", alt: "my fingers tracing where your underwear used to be", spicy: true },
+    { bpm: 120, name: "Undressing you", desc: "slowly, on purpose", alt: "one piece at a time, and I'm not rushing for anyone", spicy: true },
+    { bpm: 135, name: "Tangled",        desc: "skin on skin, nothing else on the schedule", alt: "your nails in my back, writing your name", spicy: true },
+    { bpm: 150, name: "Losing it",      desc: "when you say my name like that", alt: "when you beg — and you will", spicy: true },
+    { bpm: 168, name: "The peak",       desc: "the moment neither of us is quiet", alt: "when the whole building learns exactly whose you are", spicy: true }
+  ];
+  var stops = SWEET_STOPS.slice();
+  function refreshBpmStops() {
+    stops = isAD() ? SWEET_STOPS.concat(SPICY_STOPS).sort(function (a,b) { return a.bpm - b.bpm; }) : SWEET_STOPS.slice();
+  }
+  refreshBpmStops();
+
+  var bpmSetting = (function () { var s = parseInt(store.get("sn_bpm") || "88", 10); return isNaN(s) ? 88 : s; })();
+  var bpmOverride = null; /* set during heart-hold */
+
+  function nearestStop(v) {
+    var best = stops[0];
+    stops.forEach(function (s) { if (Math.abs(s.bpm - v) < Math.abs(best.bpm - v)) best = s; });
+    return best;
+  }
+
+  var pulseLayer = document.getElementById("pulseLayer");
+  var flamesEl = document.getElementById("flames");
+  var flare = 0; /* 0..1, from holding the chilli */
+  var vibeOn = store.get("sn_vibe") === "1";
+  var lastBeat = -1;
+  function bump(x, c, w) { var d = (x - c) / w; return Math.exp(-0.5 * d * d); }
+  function pulseFrame(tMs) {
+    if (REDUCED) return;
+    var bpm = bpmOverride !== null ? bpmOverride : bpmSetting;
+    var cycle = 60000 / bpm;
+    var ph = (tMs % cycle) / cycle;
+    var p = bump(ph, 0.03, 0.045) + 0.62 * bump(ph, 0.19, 0.055); /* lub… dub */
+    var glow = 1 + p * (0.12 + flare * 0.55) + flare * 0.3;
+    var scale = 1 + p * 0.016 + flare * 0.012;
+    pulseLayer.style.filter = "brightness(" + glow.toFixed(3) + ") saturate(" + (1 + flare * 0.45).toFixed(3) + ")";
+    pulseLayer.style.transform = "scale(" + scale.toFixed(4) + ")";
+    flamesEl.style.opacity = flare.toFixed(3);
+    /* vibration motor synced to the heart: lub… dub */
+    var beatIdx = Math.floor(tMs / cycle);
+    if (beatIdx !== lastBeat) {
+      lastBeat = beatIdx;
+      if (vibeOn && navigator.vibrate) navigator.vibrate([42, Math.max(60, cycle * 0.14), 30]);
+    }
+  }
+
+  /* ================= exact time math ================= */
   function addMonths(date, n) {
-    var d = new Date(date.getTime());
-    var day = d.getDate();
-    d.setDate(1);
-    d.setMonth(d.getMonth() + n);
+    var d = new Date(date.getTime()); var day = d.getDate();
+    d.setDate(1); d.setMonth(d.getMonth() + n);
     var maxDay = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
-    d.setDate(Math.min(day, maxDay));
-    return d;
+    d.setDate(Math.min(day, maxDay)); return d;
   }
-
   function calendarMonths(from, to) {
-    var totalMonths = (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth());
-    var anchor = addMonths(from, totalMonths);
-    if (anchor.getTime() > to.getTime()) { totalMonths--; anchor = addMonths(from, totalMonths); }
-    return { totalMonths: totalMonths, anchor: anchor };
+    var tm = (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth());
+    var anchor = addMonths(from, tm);
+    if (anchor.getTime() > to.getTime()) { tm--; anchor = addMonths(from, tm); }
+    return { totalMonths: tm, anchor: anchor };
   }
-
-  /* every unit = the FULL time elapsed, expressed in that unit (all floored, all exact) */
   function totals(from, to) {
-    if (to.getTime() < from.getTime()) { var t = from; from = to; to = t; }
+    if (to < from) { var t = from; from = to; to = t; }
     var cm = calendarMonths(from, to);
     var ms = to.getTime() - from.getTime();
     return {
-      years: Math.floor(cm.totalMonths / 12),
-      months: cm.totalMonths,
-      weeks: Math.floor(ms / 604800000),
-      days: Math.floor(ms / 86400000),
-      hours: Math.floor(ms / 3600000),
-      minutes: Math.floor(ms / 60000),
-      seconds: Math.floor(ms / 1000),
-      milliseconds: ms
+      years: Math.floor(cm.totalMonths / 12), months: cm.totalMonths,
+      weeks: Math.floor(ms / 604800000), days: Math.floor(ms / 86400000),
+      hours: Math.floor(ms / 3600000), minutes: Math.floor(ms / 60000),
+      seconds: Math.floor(ms / 1000), milliseconds: ms
     };
   }
-
-  /* classic decomposition: X years, Y months, Z weeks... */
   function breakdown(from, to) {
-    if (to.getTime() < from.getTime()) { var t = from; from = to; to = t; }
+    if (to < from) { var t = from; from = to; to = t; }
     var cm = calendarMonths(from, to);
     var years = Math.floor(cm.totalMonths / 12);
     var months = cm.totalMonths - years * 12;
@@ -538,32 +887,30 @@ footer .sig {
     var seconds = Math.floor(rem / 1000);   rem -= seconds * 1000;
     return { years: years, months: months, weeks: weeks, days: days, hours: hours, minutes: minutes, seconds: seconds, milliseconds: rem };
   }
+  function foldHidden(b) { if (!visible.weeks) { b.days += b.weeks * 7; b.weeks = 0; } return b; }
 
-  /* if "weeks" is hidden in breakdown mode, fold weeks into days so nothing is lost */
-  function foldHidden(b) {
-    if (!visible.weeks) { b.days += b.weeks * 7; b.weeks = 0; }
-    return b;
-  }
-
-  /* ---------- render loop ---------- */
-  var els = {};
-  UNITS.forEach(function (u) { els[u] = document.getElementById("v-" + u); });
+  /* ================= main loop ================= */
+  var els = {}; UNITS.forEach(function (u) { els[u] = document.getElementById("v-" + u); });
   var last = {};
   var fmt = function (n) { return n.toLocaleString("en-US"); };
+  var elapsedMs = 0;
 
-  function tick() {
+  function tick(t) {
     var now = new Date();
+    elapsedMs = now.getTime() - startDate.getTime();
     var b = totalsMode ? totals(startDate, now) : foldHidden(breakdown(startDate, now));
     UNITS.forEach(function (u) {
       var val = fmt(b[u]);
       if (last[u] !== val) { els[u].textContent = val; last[u] = val; }
     });
+    pulseFrame(t);
+    checkLiveMilestone();
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 
-  /* ---------- rotating romantic copy ---------- */
-  var MESSAGES = [
+  /* ================= quotes ================= */
+  var SWEET = [
     "...since you and I <em>kissed</em> for the very first time",
     "...since we said <em>I love you</em> and meant it more every day after",
     "...since I fell for you and <em>never</em> wanted to get back up",
@@ -573,35 +920,139 @@ footer .sig {
     "...since every clock I own started measuring <em>us</em>",
     "...since <em>home</em> stopped being a place",
     "...since the luckiest <em>11:46 PM</em> of my life",
-    "...since your hand found mine and just <em>stayed</em>"
+    "...since your hand found mine and just <em>stayed</em>",
+    "...since your laugh became my favorite sound in any <em>room</em>",
+    "...since I learned what your name feels like in my <em>mouth</em>",
+    "...since I started counting sunrises by whether you were <em>in</em> them",
+    "...since I stopped believing in coincidence and started believing in <em>you</em>",
+    "...since you looked at me like I was worth <em>staying</em> for",
+    "...since I memorized the exact weight of your head on my <em>chest</em>",
+    "...since good mornings stopped being <em>ordinary</em>",
+    "...since I found the one person I never want a day <em>off</em> from",
+    "...since my heart picked you and refused to <em>reconsider</em>",
+    "...since forever stopped sounding like a long <em>time</em>",
+    "...since your sleepy voice became the best part of my <em>day</em>",
+    "...since I started saving the funny things just to tell <em>you</em>",
+    "...since I realized I'd choose you in every version of this <em>life</em>",
+    "...since the space beside me stopped being <em>empty</em>",
+    "...since I fell for the little things you don't even <em>know</em> you do",
+    "...since loving you became the easiest thing I've ever <em>done</em>",
+    "...since you became the reason I look forward to <em>old age</em>",
+    "...since I stopped rehearsing <em>goodbyes</em>",
+    "...since your smile started running my whole entire <em>mood</em>",
+    "...since I found something worth being <em>brave</em> for",
+    "...since you made the quiet moments my <em>favorite</em> ones",
+    "...since I got to call you mine and mean it out <em>loud</em>",
+    "...since every love song suddenly made <em>sense</em>",
+    "...since I learned the sound of your heartbeat by <em>heart</em>",
+    "...since I stopped wondering and finally just <em>knew</em>",
+    "...since you became my last first <em>everything</em>",
+    "...since the whole world got a little <em>softer</em> around the edges",
+    "...since holding your hand became my favorite way to say <em>nothing</em>",
+    "...since I found the person I want to be <em>boring</em> with",
+    "...since you made forever feel like it might not be <em>long enough</em>",
+    "...since I fell asleep grateful and woke up <em>more</em> so",
+    "...since your happiness quietly became my <em>own</em>",
+    "...since I ran out of ways to say it and kept <em>saying</em> it anyway",
+    "...since I found the face I want to grow old <em>looking</em> at",
+    "...since I understood that home could have a <em>heartbeat</em>",
+    "...since you became the best thing I never saw <em>coming</em>",
+    "...since missing you turned out to be just love with nowhere to <em>sit</em>",
+    "...since I decided I'm never getting <em>tired</em> of you",
+    "...since the first time you fell asleep mid-sentence in my <em>arms</em>",
+    "...since loving you turned into the truest thing <em>about</em> me",
+    "...since we both said <em>piña coladas</em> at the exact same second and just knew",
+    "...since a horror movie called Obsession became a <em>prophecy</em>"
   ];
-  var msgEl = document.getElementById("message");
-  var msgIndex = Math.floor(Math.random() * MESSAGES.length);
-  function showMessage(i, instant) {
-    if (instant) { msgEl.innerHTML = MESSAGES[i]; return; }
-    msgEl.classList.add("fading");
-    setTimeout(function () {
-      msgEl.innerHTML = MESSAGES[i];
-      msgEl.classList.remove("fading");
-    }, 600);
+  var SPICY = [
+    "...since I watched you watch me in the <em>mirror</em>, my hand around your throat",
+    "...since I learned how quiet you go when my hand finds your <em>neck</em> in bed",
+    "...since you saw that look in my eyes and knew exactly what was <em>coming</em>",
+    "...since you screamed my name riding me like you had something to <em>prove</em>",
+    "...since you kissed me with juice on your lips and made me <em>drink</em>",
+    "...since two Emirates IDs went back in our wallets and the door clicked <em>shut</em>",
+    "...since we stopped pretending showers were about getting <em>clean</em>",
+    "...since my fingers learned exactly how to make you <em>fall apart</em>",
+    "...since your legs shook and you laughed and pulled me <em>closer</em> anyway",
+    "...since I found out what you sound like when you stop <em>pretending</em>",
+    "...since your body became my favorite place to lose <em>track</em> of time",
+    "...since I learned exactly where to kiss you to make you <em>shiver</em>",
+    "...since <em>come here</em> became my favorite thing you say",
+    "...since I memorized you with the lights <em>on</em>",
+    "...since the neighbors learned my <em>name</em>",
+    "...since you started biting your lip like you know exactly what it <em>does</em> to me",
+    "...since we stopped making it to the <em>bedroom</em>",
+    "...since your fingers in my hair started rewriting my whole <em>religion</em>",
+    "...since I learned some hunger doesn't fade — it <em>learns</em> your name",
+    "...since the best part of my day started happening after <em>midnight</em>",
+    "...since I learned you like it better when I don't ask <em>nicely</em>",
+    "...since your thighs became my favorite place to be <em>trapped</em>",
+    "...since you learned exactly what happens when you send me <em>that</em> photo",
+    "...since I started undressing you with my eyes in public and my hands in <em>private</em>",
+    "...since you found out how strong my hands are when they're <em>holding you down</em>",
+    "...since one more round became the biggest lie we tell <em>each other</em>",
+    "...since I learned to read your body better than you can <em>hide</em> it",
+    "...since your moans became my favorite song on <em>repeat</em>",
+    "...since you started wearing my marks like <em>jewelry</em>",
+    "...since <em>good girl</em> became your favorite thing to hear",
+    "...since you found out how much you love being <em>watched</em> in that mirror",
+    "...since we turned checking in early into a whole <em>sport</em>"
+  ];
+  var PEAK_SPICY = SPICY[0];
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
-  showMessage(msgIndex, true);
-  setInterval(function () {
-    msgIndex = (msgIndex + 1) % MESSAGES.length;
-    showMessage(msgIndex, false);
-  }, 5 * 60 * 1000);
+  function customToHtml(line) {
+    var safe = escapeHtml(line);
+    return safe.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  }
+  function activeDeck() {
+    /* After Dark speaks only one language */
+    if (isAD()) return SPICY.slice();
+    return onlyMine && customQuotes.length ? customQuotes.map(customToHtml) : SWEET.concat(customQuotes.map(customToHtml));
+  }
 
-  /* ---------- settings drawer ---------- */
-  var drawer = document.getElementById("drawer");
+  var msgEl = document.getElementById("message");
+  var deck = activeDeck();
+  var msgIndex = Math.floor(Math.random() * deck.length);
+  function currentQuoteHtml() {
+    var now = new Date();
+    if (isAD() && now.getHours() === 23 && now.getMinutes() === 46) return PEAK_SPICY; /* the 11:46 PM flip */
+    deck = activeDeck();
+    if (msgIndex >= deck.length) msgIndex = 0;
+    return deck[msgIndex];
+  }
+  function showMessage(instant) {
+    var html = currentQuoteHtml();
+    if (instant) { msgEl.innerHTML = html; return; }
+    msgEl.classList.add("fading");
+    setTimeout(function () { msgEl.innerHTML = html; msgEl.classList.remove("fading"); }, 600);
+  }
+  showMessage(true);
+  setInterval(function () { msgIndex = (msgIndex + 1) % Math.max(activeDeck().length, 1); showMessage(false); }, 5 * 60 * 1000);
+
+  /* ================= sheets ================= */
   var scrim = document.getElementById("scrim");
-  function openDrawer() { drawer.classList.add("open"); scrim.classList.add("open"); }
-  function closeDrawer() { drawer.classList.remove("open"); scrim.classList.remove("open"); }
-  document.getElementById("settingsBtn").addEventListener("click", openDrawer);
-  document.getElementById("closeBtn").addEventListener("click", closeDrawer);
-  scrim.addEventListener("click", closeDrawer);
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDrawer(); });
+  var openSheet = null;
+  function open(sheet) { if (openSheet) openSheet.classList.remove("open"); sheet.classList.add("open"); scrim.classList.add("open"); openSheet = sheet; }
+  function closeSheets() { if (openSheet) openSheet.classList.remove("open"); scrim.classList.remove("open"); openSheet = null; }
+  scrim.addEventListener("click", closeSheets);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeSheets(); });
 
-  /* mode toggle */
+  var drawer = document.getElementById("drawer");
+  document.getElementById("settingsBtn").addEventListener("click", function () { open(drawer); });
+  document.getElementById("closeBtn").addEventListener("click", closeSheets);
+
+  var quotesSheet = document.getElementById("quotesSheet");
+  document.getElementById("openQuotes").addEventListener("click", function () { open(quotesSheet); renderChips(); });
+  document.getElementById("closeQuotes").addEventListener("click", function () { open(drawer); });
+
+  var msSheet = document.getElementById("msSheet");
+  document.getElementById("msBtn").addEventListener("click", function () { renderMilestones(); open(msSheet); });
+  document.getElementById("closeMs").addEventListener("click", closeSheets);
+
+  /* ================= settings: mode, units, date ================= */
   var modeToggle = document.getElementById("modeToggle");
   modeToggle.checked = totalsMode;
   modeToggle.addEventListener("change", function () {
@@ -609,16 +1060,15 @@ footer .sig {
     store.set("sn_mode", totalsMode ? "totals" : "breakdown");
   });
 
-  /* unit toggles */
-  var LABELS = { years: "Years", months: "Months", weeks: "Weeks", days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds", milliseconds: "Milliseconds" };
+  var LABELS = { years:"Years", months:"Months", weeks:"Weeks", days:"Days", hours:"Hours", minutes:"Minutes", seconds:"Seconds", milliseconds:"Milliseconds" };
   var togglesWrap = document.getElementById("unitToggles");
   function applyVisibility() {
-    var firstFound = false;
+    var first = false;
     UNITS.forEach(function (u) {
       var row = document.querySelector('.row-unit[data-unit="' + u + '"]');
       row.classList.toggle("hidden-unit", !visible[u]);
       row.classList.remove("first-visible");
-      if (visible[u] && !firstFound) { row.classList.add("first-visible"); firstFound = true; }
+      if (visible[u] && !first) { row.classList.add("first-visible"); first = true; }
     });
     store.set("sn_units", JSON.stringify(visible));
   }
@@ -630,64 +1080,628 @@ footer .sig {
     togglesWrap.appendChild(row);
   });
   togglesWrap.addEventListener("change", function (e) {
-    var u = e.target.getAttribute("data-u");
-    if (!u) return;
-    visible[u] = e.target.checked;
-    applyVisibility();
+    var u = e.target.getAttribute("data-u"); if (!u) return;
+    visible[u] = e.target.checked; applyVisibility();
   });
   applyVisibility();
 
-  /* date editing */
   var dateInput = document.getElementById("dateInput");
   function toInputValue(d) {
-    function p(n) { return String(n).padStart(2, "0"); }
-    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + "T" + p(d.getHours()) + ":" + p(d.getMinutes());
+    function p(n){return String(n).padStart(2,"0");}
+    return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())+"T"+p(d.getHours())+":"+p(d.getMinutes());
   }
   dateInput.value = toInputValue(startDate);
   document.getElementById("saveDate").addEventListener("click", function () {
     if (!dateInput.value) return;
-    var d = new Date(dateInput.value);
-    if (isNaN(d.getTime())) return;
-    startDate = d;
-    store.set("sn_start", String(d.getTime()));
-    closeDrawer();
+    var d = new Date(dateInput.value); if (isNaN(d.getTime())) return;
+    startDate = d; store.set("sn_start", String(d.getTime())); closeSheets();
   });
   document.getElementById("resetDate").addEventListener("click", function () {
-    startDate = DEFAULT_START;
-    dateInput.value = toInputValue(DEFAULT_START);
-    store.set("sn_start", String(DEFAULT_START.getTime()));
-    closeDrawer();
+    startDate = DEFAULT_START; dateInput.value = toInputValue(DEFAULT_START);
+    store.set("sn_start", String(DEFAULT_START.getTime())); closeSheets();
   });
 
-  /* ---------- easter egg: tap the heart ---------- */
-  var heartBtn = document.getElementById("heartBtn");
-  var HEARTS = ["♥", "💗", "💞", "♥", "💘"];
-  function burst(x, y) {
-    for (var i = 0; i < 7; i++) {
+  /* ================= BPM slider + chilli ================= */
+  var bpmSlider = document.getElementById("bpmSlider");
+  var bpmName = document.getElementById("bpmName");
+  var bpmNum = document.getElementById("bpmNum");
+  var bpmDesc = document.getElementById("bpmDesc");
+  var chilli = document.getElementById("chilli");
+  var chilliRing = chilli.querySelector("circle");
+  var adRow = document.getElementById("adRow");
+  var adToggle = document.getElementById("adToggle");
+  var resetAllWrap = document.getElementById("resetAllWrap");
+
+  function renderBpm() {
+    var stop = nearestStop(bpmSetting);
+    bpmSlider.value = stop.bpm;
+    bpmSetting = stop.bpm;
+    bpmName.textContent = stop.name;
+    bpmNum.textContent = stop.bpm + " BPM";
+    bpmDesc.textContent = stop.desc;
+    bpmDesc.classList.toggle("spicy-stop", !!stop.spicy && isAD());
+    bpmDesc.dataset.alt = stop.alt || "";
+    bpmDesc.dataset.desc = stop.desc;
+    store.set("sn_bpm", String(bpmSetting));
+    /* reveal the chilli only when she pushes the slider to its limit */
+    if (!adUnlocked && stop.bpm >= 160 && !chilli.classList.contains("revealed")) {
+      chilli.classList.add("revealed");
+    }
+  }
+  bpmSlider.addEventListener("input", function () {
+    bpmSetting = parseInt(bpmSlider.value, 10);
+    var stop = nearestStop(bpmSetting);
+    bpmName.textContent = stop.name; bpmNum.textContent = bpmSlider.value + " BPM"; bpmDesc.textContent = stop.desc;
+  });
+  bpmSlider.addEventListener("change", function () { bpmSetting = parseInt(bpmSlider.value, 10); renderBpm(); });
+
+  /* triple-tap the spicy description */
+  var descTaps = 0, descTimer = null;
+  bpmDesc.addEventListener("click", function () {
+    if (!isAD() || !bpmDesc.dataset.alt) return;
+    descTaps++;
+    clearTimeout(descTimer);
+    descTimer = setTimeout(function () { descTaps = 0; }, 500);
+    if (descTaps >= 3) {
+      descTaps = 0;
+      bpmDesc.textContent = bpmDesc.dataset.alt;
+      setTimeout(function () { bpmDesc.textContent = bpmDesc.dataset.desc; }, 4000);
+    }
+  });
+
+  /* chilli: single tap = a hint. long press = ring fills, it ignites, After Dark unlocks. */
+  var holdTimer = null, holdStart = 0, holdRAF = null;
+  chilli.addEventListener("click", function () {
+    if (adUnlocked) return;
+    chilli.classList.remove("hinting"); void chilli.offsetWidth; chilli.classList.add("hinting");
+  });
+  function chilliHoldFrame() {
+    var p = Math.min((performance.now() - holdStart) / 1600, 1);
+    chilliRing.style.strokeDashoffset = String(151 * (1 - p));
+    if (p > 0.35) chilli.classList.add("igniting");
+    chilli.style.transform = "scale(" + (1 + p * 0.35) + ")";
+    if (p >= 1) { unlockAfterDark(); endChilliHold(); return; }
+    holdRAF = requestAnimationFrame(chilliHoldFrame);
+  }
+  function startChilliHold(e) {
+    if (adUnlocked) return;
+    e.preventDefault();
+    holdStart = performance.now();
+    holdRAF = requestAnimationFrame(chilliHoldFrame);
+  }
+  function endChilliHold() {
+    cancelAnimationFrame(holdRAF);
+    chilliRing.style.strokeDashoffset = "151";
+    chilli.classList.remove("igniting");
+    chilli.style.transform = "";
+  }
+  chilli.addEventListener("pointerdown", startChilliHold);
+  chilli.addEventListener("pointerup", endChilliHold);
+  chilli.addEventListener("pointerleave", endChilliHold);
+
+  function unlockAfterDark() {
+    adUnlocked = true; adOn = true;
+    store.set("sn_ad_unlocked", "1");
+    syncAdUi();
+    applyAfterDark();
+    popupShow("unlocked", "after dark is yours now, love. the lights just went low. 🌶️", 0);
+    burstHearts(innerWidth / 2, innerHeight / 2, 10, true);
+  }
+  function syncAdUi() {
+    adRow.style.display = adUnlocked ? "flex" : "none";
+    resetAllWrap.style.display = adUnlocked ? "block" : "none";
+    chilli.style.display = adUnlocked ? "none" : "";
+    adToggle.checked = adOn;
+  }
+  adToggle.addEventListener("change", function () { adOn = adToggle.checked; applyAfterDark(); showMessage(false); });
+  syncAdUi();
+  applyAfterDark();
+  renderBpm();
+  renderDots(false);
+
+  /* vibration toggle (default off; hidden where unsupported) */
+  var vibeRow = document.getElementById("vibeRow");
+  var vibeToggle = document.getElementById("vibeToggle");
+  if (!("vibrate" in navigator)) {
+    vibeRow.style.display = "none";
+  } else {
+    vibeToggle.checked = vibeOn;
+    vibeToggle.addEventListener("change", function () {
+      vibeOn = vibeToggle.checked;
+      store.set("sn_vibe", vibeOn ? "1" : "0");
+      if (vibeOn && navigator.vibrate) navigator.vibrate([42, 90, 30]); /* a hello from the heart */
+    });
+  }
+
+  document.getElementById("resetAll").addEventListener("click", function () {
+    ALL_KEYS.forEach(store.del);
+    /* also clear milestone popups + daily popup memory */
+    try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf("sn_") === 0) localStorage.removeItem(k); }); } catch (e) {}
+    location.reload();
+  });
+
+  /* ================= custom quotes sheet ================= */
+  var quoteBox = document.getElementById("quoteBox");
+  var quoteCount = document.getElementById("quoteCount");
+  var onlyMineEl = document.getElementById("onlyMine");
+  onlyMineEl.checked = onlyMine;
+  onlyMineEl.addEventListener("change", function () {
+    onlyMine = onlyMineEl.checked; store.set("sn_only_mine", onlyMine ? "1" : "0"); showMessage(false);
+  });
+  function saveCustom() {
+    store.set("sn_custom_quotes", JSON.stringify(customQuotes));
+    quoteCount.textContent = customQuotes.length + " of your lines · " + SWEET.length + " built-in";
+  }
+  function renderChips() {
+    var wrap = document.getElementById("quoteChips");
+    wrap.innerHTML = "";
+    customQuotes.forEach(function (q, i) {
+      var chip = document.createElement("span");
+      chip.className = "chip";
+      var txt = document.createElement("span"); txt.textContent = q;
+      var del = document.createElement("button"); del.textContent = "✕"; del.setAttribute("aria-label", "Delete this line");
+      del.addEventListener("click", function () { customQuotes.splice(i, 1); saveCustom(); renderChips(); });
+      chip.appendChild(txt); chip.appendChild(del);
+      wrap.appendChild(chip);
+    });
+  }
+  document.getElementById("addQuotes").addEventListener("click", function () {
+    var lines = quoteBox.value.split("\n").map(function (l) { return l.trim(); }).filter(Boolean);
+    lines.forEach(function (l) { if (customQuotes.indexOf(l) === -1) customQuotes.push(l); });
+    quoteBox.value = "";
+    saveCustom(); renderChips(); showMessage(false);
+  });
+  saveCustom();
+
+  /* ================= milestones ================= */
+  var SEC = 1000, MIN = 60000, HR = 3600000, DAY = 86400000, YR = 31557600000; /* 365.25 d */
+  var MILESTONES = [
+    { ms: 7*DAY, t: "One week of us", tier: "rose", ico: "♥" },
+    { ms: 30*DAY, t: "One month", tier: "rose", ico: "♥" },
+    { ms: 1e6*SEC, t: "One million seconds", s: "≈ 11.6 days of you", tier: "rose", ico: "✧" },
+    { ms: 100*DAY, t: "100 days", tier: "rose", ico: "♥" },
+    { ms: 1e7*SEC, t: "Ten million seconds", s: "≈ 116 days", tier: "rose", ico: "✧" },
+    { ms: 0.5*YR, t: "Half a year", tier: "rose", ico: "♥" },
+    { ms: 1*YR, t: "Our first year", tier: "gold", ico: "✦" },
+    { ms: 500*DAY, t: "500 days", tier: "gold", ico: "♥" },
+    { ms: 1e6*MIN, t: "One million minutes", s: "≈ 1.9 years", tier: "gold", ico: "✧" },
+    { ms: 2*YR, t: "Two years", tier: "gold", ico: "✦" },
+    { ms: 1000*DAY, t: "1,000 days", tier: "gold", ico: "♥" },
+    { ms: 1e8*SEC, t: "One hundred million seconds", s: "≈ 3.2 years", tier: "gold", ico: "✧" },
+    { ms: 5*YR, t: "Five years", tier: "gold", ico: "✦" },
+    { ms: 10*YR, t: "A decade of us", tier: "crimson", ico: "❥" },
+    { ms: 10000*DAY, t: "Ten thousand days", s: "≈ 27 years", tier: "crimson", ico: "♥" },
+    { ms: 25*YR, t: "Twenty-five years — silver", tier: "crimson", ico: "❥" },
+    { ms: 1e9*SEC, t: "One billion seconds", s: "≈ 31.7 years", tier: "crimson", ico: "✧" },
+    { ms: 50*YR, t: "Fifty years — golden", tier: "crimson", ico: "❥" },
+    { ms: 75*YR, t: "Seventy-five years", tier: "crimson", ico: "❥" },
+    { ms: 100*YR, t: "A century of us", s: "past us — and still counting", tier: "violet", ico: "☾" },
+    { ms: 1e6*HR, t: "One million hours", s: "≈ 114 years", tier: "violet", ico: "✧" },
+    { ms: 500*YR, t: "Five hundred years", s: "our names outlived by our number", tier: "violet", ico: "☾" },
+    { ms: 1000*YR, t: "One millennium", s: "still ours", tier: "violet", ico: "☾" },
+    { ms: 10000*YR, t: "Ten thousand years", s: "civilizations rise and fall. this doesn't.", tier: "violet", ico: "☾" },
+    { ms: 1e6*YR, t: "One million years", s: "beyond calendars now", tier: "cosmic", ico: "∞" },
+    { ms: 1e9*YR, t: "One billion years", s: "the continents have moved. we haven't.", tier: "cosmic", ico: "∞" },
+    { ms: 5e9*YR, t: "The Sun dies", s: "this doesn't.", tier: "cosmic", ico: "∞" },
+    { ms: 1e11*YR, t: "The last stars fade", s: "one small light left: this one", tier: "cosmic", ico: "∞" },
+    { ms: 1e15*YR, t: "The universe goes dark", s: "and somewhere in the dark, a number, still climbing", tier: "cosmic", ico: "∞" },
+    { ms: 1e100*YR, t: "The heat death of the universe", s: "everything ends. except this. except us.", tier: "cosmic", ico: "∞" }
+  ];
+  function msDate(ms) { return new Date(startDate.getTime() + ms); }
+  function renderMilestones() {
+    var list = document.getElementById("msList");
+    list.innerHTML = "";
+    MILESTONES.forEach(function (m) {
+      var done = elapsedMs >= m.ms;
+      var el = document.createElement("div");
+      el.className = "ms-item tier-" + m.tier + (done ? " done" : " locked");
+      var sub = m.s || "";
+      if (m.ms < 200 * YR) {
+        var d = msDate(m.ms);
+        sub = (sub ? sub + " · " : "") + (done ? "reached " : "") + d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+      }
+      el.innerHTML = '<div class="ico">' + (done ? m.ico : "🔒") + '</div><div><div class="t">' + m.t + '</div><div class="s">' + sub + "</div></div>";
+      list.appendChild(el);
+    });
+  }
+  /* live crossing + one-time catch-up */
+  var ack = parseInt(store.get("sn_ms_ack") || "-1", 10);
+  function highestReachedIndex() {
+    var idx = -1;
+    for (var i = 0; i < MILESTONES.length; i++) { if (elapsedMs >= MILESTONES[i].ms) idx = i; else break; }
+    return idx;
+  }
+  var nextIdx = null;
+  function checkLiveMilestone() {
+    if (nextIdx === null) { nextIdx = highestReachedIndex() + 1; }
+    if (nextIdx < MILESTONES.length && elapsedMs >= MILESTONES[nextIdx].ms) {
+      var m = MILESTONES[nextIdx];
+      popupShow("a milestone, live", "right now, this second — <strong>" + m.t.toLowerCase() + "</strong> of you. ♥", 10000);
+      burstHearts(innerWidth / 2, innerHeight * 0.4, 14, true);
+      ack = nextIdx; store.set("sn_ms_ack", String(ack));
+      nextIdx++;
+    }
+  }
+
+  /* ================= popups ================= */
+  var popup = document.getElementById("popup");
+  var popKicker = document.getElementById("popKicker");
+  var popBody = document.getElementById("popBody");
+  var popTimer = null;
+  function popupShow(kicker, html, autoHideMs) {
+    popKicker.textContent = kicker;
+    popBody.innerHTML = html;
+    popup.classList.add("show");
+    clearTimeout(popTimer);
+    if (autoHideMs) popTimer = setTimeout(popupHide, autoHideMs);
+  }
+  function popupHide() { popup.classList.remove("show"); }
+  popup.addEventListener("click", popupHide);
+
+  function dateKey(d) { return d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate(); }
+  function oncePerDay(tag) {
+    var k = "sn_pop_" + dateKey(new Date()) + "_" + tag;
+    if (store.get(k)) return false;
+    store.set(k, "1"); return true;
+  }
+
+  var POP_MORNING = [
+    "good morning, my love. the clock ran all night just to show you this number.",
+    "you woke up more loved than you fell asleep. by exactly this much."
+  ];
+  var POP_AFTERNOON = ["midday check-in: still yours, still counting."];
+  var POP_EVENING = ["every one of today's seconds had you in it. good work, today."];
+  var POP_LATE = [
+    "you're up late… thinking about me? good. the feeling's mutual.",
+    "it's past midnight, which means I've now loved you one day longer."
+  ];
+  var POP_LATE_AD = [
+    "you're up late... if you're thinking what I'm thinking, send me a pic. you know the kind. 🌶️",
+    "still awake? touch yourself and think of me. consider it an order, love.",
+    "it's late. you know exactly where I'd rather be right now.",
+    "still awake? careful. I'm exactly one 'come over' away."
+  ];
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+  function openingPopup() {
+    var now = new Date();
+    var h = now.getHours(), m = now.getMinutes();
+
+    /* 1) milestone catch-up beats everything */
+    var reached = highestReachedIndex();
+    if (reached > ack) {
+      var mm = MILESTONES[reached];
+      ack = reached; store.set("sn_ms_ack", String(ack));
+      popupShow("we reached a milestone, love", "while you were away, we passed <strong>" + mm.t.toLowerCase() + "</strong>. I felt it. ♥", 12000);
+      return;
+    }
+    /* 2) special minutes */
+    if (h === 23 && m === 46 && oncePerDay("s1146")) {
+      popupShow("11:46 pm", "look at the time. this minute belongs to us.", 10000); return;
+    }
+    if (h === 23 && m === 11 && oncePerDay("s2311")) {
+      popupShow("11:11 pm", "the same 11:11 when we asked each other the time — June 11th, when it kept disappearing around us. make a wish. mine's already sitting next to me.", 12000); return;
+    }
+    /* 3) time-of-day, once per bucket per day */
+    var bucket, line;
+    if (h >= 5 && h < 11) { bucket = "morning"; line = pick(POP_MORNING); }
+    else if (h >= 11 && h < 17) { bucket = "afternoon"; line = pick(POP_AFTERNOON); }
+    else if (h >= 17 && h < 22) { bucket = "evening"; line = pick(POP_EVENING); }
+    else { bucket = "late"; line = isAD() ? pick(POP_LATE.concat(POP_LATE_AD)) : pick(POP_LATE); }
+    if (oncePerDay(bucket)) {
+      var kick = { morning: "good morning", afternoon: "hello, love", evening: "good evening", late: "it's late" }[bucket];
+      popupShow(kick, line, 10000);
+    }
+  }
+  setTimeout(openingPopup, 2500);
+
+  /* ================= monthiversary / anniversary ================= */
+  var eyebrow = document.getElementById("eyebrow");
+  var EYEBROW_DEFAULT = eyebrow.innerHTML;
+  function checkSpecialDay() {
+    var now = new Date();
+    if (now.getDate() === 19) {
+      eyebrow.classList.add("rosegold");
+      if (now.getMonth() === 5 && now.getFullYear() > 2026) {
+        eyebrow.innerHTML = "one more year of us <span class='amp'>♥</span>";
+        if (oncePerDay("anniv")) setTimeout(function () { heartBloom(); }, 1500);
+      } else {
+        eyebrow.innerHTML = "it's the 19th — our monthiversary <span class='amp'>♥</span>";
+      }
+    } else {
+      eyebrow.classList.remove("rosegold");
+      eyebrow.innerHTML = EYEBROW_DEFAULT;
+    }
+  }
+  checkSpecialDay();
+  setInterval(checkSpecialDay, 60000);
+
+  /* ================= hearts (nice ones: soft svg, glow, drift) ================= */
+  function heartSvg(size, color) {
+    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24"><path fill="' + color + '" d="M12 21s-6.7-4.3-9.3-8C.5 9.9 1.6 5.8 5 4.6c2-.7 4.2 0 5.5 1.7L12 8l1.5-1.7C14.8 4.6 17 3.9 19 4.6c3.4 1.2 4.5 5.3 2.3 8.4-2.6 3.7-9.3 8-9.3 8z"/></svg>';
+  }
+  var HEART_COLORS = ["#ff5c8a", "#ff3b4e", "#ff8ab8", "#ff6b6b", "#ffb3c8"];
+  function burstHearts(x, y, n, big) {
+    for (var i = 0; i < n; i++) {
       (function (i) {
         setTimeout(function () {
           var h = document.createElement("span");
           h.className = "float-heart";
-          h.textContent = HEARTS[Math.floor(Math.random() * HEARTS.length)];
-          h.style.left = (x - 12 + (Math.random() * 60 - 30)) + "px";
-          h.style.top = (y - 10) + "px";
-          h.style.color = "var(--accent-hot)";
+          var size = (big ? 18 : 14) + Math.random() * (big ? 22 : 12);
+          h.innerHTML = heartSvg(size, HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)]);
+          h.style.left = (x - size / 2 + (Math.random() * 90 - 45)) + "px";
+          h.style.top = (y + (Math.random() * 30 - 10)) + "px";
+          h.style.setProperty("--dur", (2.6 + Math.random() * 1.6) + "s");
+          h.style.setProperty("--rot", (Math.random() * 40 - 20) + "deg");
           document.body.appendChild(h);
-          setTimeout(function () { h.remove(); }, 2700);
-        }, i * 120);
+          setTimeout(function () { h.remove(); }, 4400);
+        }, i * 110);
       })(i);
     }
   }
-  heartBtn.addEventListener("click", function (e) { burst(e.clientX, e.clientY); });
+  function heartBloom() { /* anniversary: a slow, generous bloom from the bottom */
+    for (var i = 0; i < 26; i++) {
+      (function (i) {
+        setTimeout(function () {
+          burstHearts(Math.random() * innerWidth, innerHeight - 40, 1, true);
+        }, i * 260);
+      })(i);
+    }
+  }
+
+  /* ================= heart tap + HOLD (bpm ramp → shower) ================= */
+  var heartBtn = document.getElementById("heartBtn");
+  var holdBpmEl = document.getElementById("holdBpm");
+  var heartHold = null, heartHoldT0 = 0, heartWasHold = false;
+
+  function heartHoldFrame() {
+    var t = (performance.now() - heartHoldT0) / 1000;
+    if (t > 0.35) {
+      heartWasHold = true;
+      document.body.classList.add("hearthold");
+      var b = Math.min(60 + (t - 0.35) * 22, 170); /* ramps 60 → 170 over ~5s */
+      bpmOverride = b;
+      var stop = nearestStop(b);
+      holdBpmEl.textContent = Math.round(b) + " · " + stop.name.toLowerCase();
+      if (b >= 170) { endHeartHold(true); return; }
+    }
+    heartHold = requestAnimationFrame(heartHoldFrame);
+  }
+  function startHeartHold(e) {
+    e.preventDefault();
+    heartWasHold = false;
+    heartHoldT0 = performance.now();
+    heartHold = requestAnimationFrame(heartHoldFrame);
+  }
+  function endHeartHold(maxed) {
+    cancelAnimationFrame(heartHold);
+    document.body.classList.remove("hearthold");
+    bpmOverride = null;
+    holdBpmEl.textContent = "";
+    if (maxed === true) {
+      var r = heartBtn.getBoundingClientRect();
+      burstHearts(r.left + r.width / 2, r.top, 22, true);
+    } else if (!heartWasHold) {
+      var r2 = heartBtn.getBoundingClientRect();
+      burstHearts(r2.left + r2.width / 2, r2.top, 7, false);
+    }
+  }
+  heartBtn.addEventListener("pointerdown", startHeartHold);
+  heartBtn.addEventListener("pointerup", function () { endHeartHold(false); });
+  heartBtn.addEventListener("pointerleave", function () { endHeartHold(false); });
   heartBtn.addEventListener("keydown", function (e) {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       var r = heartBtn.getBoundingClientRect();
-      burst(r.left + r.width / 2, r.top);
+      burstHearts(r.left + r.width / 2, r.top, 7, false);
     }
   });
 
-  /* ---------- PWA: offline install (works on GitHub Pages; harmless as a local file) ---------- */
+  /* ================= secret notes (long-press the names) ================= */
+  var NOTES = {
+    sweet: "If you found this, it means you pressed on our names the way you press on my heart. Listen carefully, Shady: there is no version of any world where I don't find you and choose you. This clock is just the receipt. — N",
+    afterDark: "You found the other note. Of course you did. Come here. Bring nothing. Wear less. I'll take care of everything else — I always do. — N"
+  };
+  /* Nirsh can edit these anytime by changing love-notes.json on GitHub — no code needed */
+  fetch("./love-notes.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (j) {
+    if (j && j.sweet) NOTES.sweet = j.sweet;
+    if (j && j.afterDark) NOTES.afterDark = j.afterDark;
+  }).catch(function () {});
+
+  var eyeTimer = null;
+  eyebrow.addEventListener("pointerdown", function (e) {
+    e.preventDefault();
+    eyeTimer = setTimeout(function () {
+      var note = isAD() ? NOTES.afterDark : NOTES.sweet;
+      popupShow(isAD() ? "for your eyes only" : "a hidden note", escapeHtml(note), 0);
+    }, 900);
+  });
+  ["pointerup", "pointerleave"].forEach(function (ev) {
+    eyebrow.addEventListener(ev, function () { clearTimeout(eyeTimer); });
+  });
+
+  /* ================= whisper mode (long-press the message, After Dark) ================= */
+  var whisperTimer = null;
+  msgEl.addEventListener("pointerdown", function (e) {
+    if (!isAD()) return;
+    whisperTimer = setTimeout(function () {
+      document.body.classList.add("whisper");
+      msgEl.innerHTML = pick(SPICY);
+    }, 700);
+  });
+  ["pointerup", "pointerleave"].forEach(function (ev) {
+    msgEl.addEventListener(ev, function () {
+      clearTimeout(whisperTimer);
+      if (document.body.classList.contains("whisper")) {
+        document.body.classList.remove("whisper");
+        showMessage(true);
+      }
+    });
+  });
+
+  /* ================= flame button: hold to BURN ================= */
+  var flameBtn = document.getElementById("flameBtn");
+  var flameRAF = null, flameDown = false, flameDownT0 = 0, rained = false;
+  function emojiRain() {
+    var EMOJIS = ["🌶️", "🫠", "💦", "🌶️", "💦"];
+    var n = 46;
+    for (var i = 0; i < n; i++) {
+      (function (i) {
+        setTimeout(function () {
+          var s = document.createElement("span");
+          s.className = "rain-emoji";
+          s.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+          s.style.left = (Math.random() * 100) + "vw";
+          s.style.setProperty("--fs", (18 + Math.random() * 20) + "px");
+          s.style.setProperty("--dur", (2.1 + Math.random() * 2.2) + "s");
+          s.style.setProperty("--rot", (Math.random() * 80 - 40) + "deg");
+          document.body.appendChild(s);
+          setTimeout(function () { s.remove(); }, 4600);
+        }, i * 70);
+      })(i);
+    }
+  }
+  function flameFrame() {
+    if (flameDown) {
+      flare = Math.min(flare + 0.035, 1);
+      /* hold it long enough and the sky answers */
+      if (!rained && performance.now() - flameDownT0 > 10000) {
+        rained = true;
+        emojiRain();
+        if (navigator.vibrate) navigator.vibrate([80, 60, 80, 60, 160]);
+      }
+    } else {
+      flare = Math.max(flare - 0.045, 0);
+    }
+    document.body.classList.toggle("melting", flare > 0.35);
+    if (flare > 0 || flameDown) flameRAF = requestAnimationFrame(flameFrame);
+    else { document.body.classList.remove("melting"); flameRAF = null; }
+  }
+  flameBtn.addEventListener("pointerdown", function (e) {
+    e.preventDefault(); flameDown = true; flameDownT0 = performance.now(); rained = false;
+    if (!flameRAF) flameRAF = requestAnimationFrame(flameFrame);
+  });
+  ["pointerup", "pointerleave"].forEach(function (ev) {
+    flameBtn.addEventListener(ev, function () { flameDown = false; });
+  });
+
+  /* ================= steam (After Dark): breathe on the glass, wipe it clear ================= */
+  var steam = document.getElementById("steam");
+  var sctx = steam.getContext("2d");
+  var steamOn = false, steamBuild = null;
+  var noiseTile = null;
+  function makeNoiseTile() {
+    var c = document.createElement("canvas"); c.width = c.height = 256;
+    var x = c.getContext("2d");
+    var img = x.createImageData(256, 256);
+    for (var i = 0; i < img.data.length; i += 4) {
+      var v = 200 + Math.random() * 55;
+      img.data[i] = v; img.data[i+1] = v; img.data[i+2] = v;
+      img.data[i+3] = 26 + Math.random() * 36;
+    }
+    x.putImageData(img, 0, 0);
+    return c;
+  }
+  function sizeSteam() {
+    steam.width = innerWidth * (window.devicePixelRatio || 1);
+    steam.height = innerHeight * (window.devicePixelRatio || 1);
+    steam.style.width = innerWidth + "px"; steam.style.height = innerHeight + "px";
+  }
+  function startSteam() {
+    if (steamOn) return;
+    steamOn = true;
+    sizeSteam();
+    if (!noiseTile) noiseTile = makeNoiseTile();
+    steam.classList.add("active");
+    var alpha = 0;
+    var dpr = window.devicePixelRatio || 1;
+    steamBuild = setInterval(function () {
+      alpha += 0.06;
+      /* layered soft fog: gray-white wash + condensation noise + edge vignette */
+      sctx.globalCompositeOperation = "source-over";
+      sctx.globalAlpha = 0.06;
+      sctx.fillStyle = "rgba(225,228,232,1)";
+      sctx.fillRect(0, 0, steam.width, steam.height);
+      sctx.globalAlpha = 0.05;
+      var pat = sctx.createPattern(noiseTile, "repeat");
+      sctx.fillStyle = pat;
+      sctx.fillRect(0, 0, steam.width, steam.height);
+      var g = sctx.createRadialGradient(steam.width/2, steam.height/2, steam.width*0.2, steam.width/2, steam.height/2, steam.width*0.75);
+      g.addColorStop(0, "rgba(230,232,236,0)");
+      g.addColorStop(1, "rgba(230,232,236,0.10)");
+      sctx.globalAlpha = 1;
+      sctx.fillStyle = g;
+      sctx.fillRect(0, 0, steam.width, steam.height);
+      if (alpha >= 1) { clearInterval(steamBuild); scheduleDrips(dpr); }
+    }, 90);
+  }
+  function wipeAt(x, y, r) {
+    var dpr = window.devicePixelRatio || 1;
+    sctx.globalCompositeOperation = "destination-out";
+    var g = sctx.createRadialGradient(x*dpr, y*dpr, 0, x*dpr, y*dpr, r*dpr);
+    g.addColorStop(0, "rgba(0,0,0,0.95)");
+    g.addColorStop(0.7, "rgba(0,0,0,0.55)");
+    g.addColorStop(1, "rgba(0,0,0,0)");
+    sctx.fillStyle = g;
+    sctx.beginPath(); sctx.arc(x*dpr, y*dpr, r*dpr, 0, Math.PI*2); sctx.fill();
+    sctx.globalCompositeOperation = "source-over";
+  }
+  function scheduleDrips(dpr) { /* a few slow condensation drips, like a real fogged window */
+    var n = 4;
+    for (var i = 0; i < n; i++) {
+      (function () {
+        var x = 40 + Math.random() * (innerWidth - 80);
+        var y = 30 + Math.random() * innerHeight * 0.25;
+        var len = 90 + Math.random() * 160, done = 0;
+        var iv = setInterval(function () {
+          if (!steamOn) { clearInterval(iv); return; }
+          wipeAt(x + Math.sin(done * 0.09) * 2.5, y + done, 4.5);
+          done += 2.4;
+          if (done > len) clearInterval(iv);
+        }, 24);
+      })();
+    }
+  }
+  function endSteam() {
+    steamOn = false;
+    clearInterval(steamBuild);
+    steam.classList.remove("active");
+    sctx.clearRect(0, 0, steam.width, steam.height);
+  }
+  steam.addEventListener("pointermove", function (e) {
+    if (!steamOn || e.buttons === 0 && e.pointerType === "mouse") return;
+    wipeAt(e.clientX, e.clientY, 42);
+  });
+  steam.addEventListener("dblclick", endSteam);
+  var lastSteamTap = 0;
+  steam.addEventListener("pointerdown", function (e) {
+    var t = Date.now();
+    if (t - lastSteamTap < 350) endSteam();
+    lastSteamTap = t;
+    wipeAt(e.clientX, e.clientY, 42);
+  });
+  /* trigger: two fingers held (touch) or press-and-hold on the background (desktop) */
+  var touchCount = 0, twoFingerTimer = null, bgHoldTimer = null;
+  document.addEventListener("touchstart", function (e) {
+    if (!isAD() || steamOn) return;
+    touchCount = e.touches.length;
+    if (touchCount >= 2) {
+      twoFingerTimer = setTimeout(startSteam, 650);
+    }
+  }, { passive: true });
+  document.addEventListener("touchend", function () { clearTimeout(twoFingerTimer); }, { passive: true });
+  document.addEventListener("pointerdown", function (e) {
+    if (!isAD() || steamOn || e.pointerType !== "mouse") return;
+    var tag = (e.target.tagName || "").toLowerCase();
+    if (e.target.closest(".iconbtn, .drawer, .clock, .message, .heart, .popup, .eyebrow, button, input, textarea, label")) return;
+    bgHoldTimer = setTimeout(startSteam, 1200);
+  });
+  ["pointerup", "pointermove"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { if (ev === "pointerup" || (e.movementX||0)+(e.movementY||0) > 6) clearTimeout(bgHoldTimer); });
+  });
+  window.addEventListener("resize", function () { if (steamOn) { endSteam(); } });
+
+  /* ================= service worker: auto-updates from GitHub ================= */
   if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
     navigator.serviceWorker.register("./sw.js").catch(function () {});
   }

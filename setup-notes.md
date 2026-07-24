@@ -1,34 +1,41 @@
-# Nirsh's checklist — do this BEFORE sharing (then delete this file)
+# Nirsh's checklist — read BEFORE sharing (then delete this file from the repo)
 
-## 1. Publish (5 minutes, free)
-1. Go to github.com → sign in → **New repository**. Name it something like
-   `every-second-of-us`. Set it to **Public** (required for free Pages).
-2. On the empty repo page: **Add file → Upload files** → drag in EVERYTHING
-   from this folder (index.html, manifest.webmanifest, sw.js, README.md,
-   the icons/ folder). Commit.
-3. **Settings → Pages** → Source: *Deploy from a branch* → Branch: `main`,
-   folder `/ (root)` → Save.
-4. Wait ~1 minute, refresh — your link appears at the top:
-   `https://YOUR-USERNAME.github.io/every-second-of-us/`
+## Publish (5 min, free)
+1. github.com → New repository (e.g. `every-second-of-us`) → Public.
+2. Upload EVERYTHING in this folder (index.html, manifest.webmanifest, sw.js,
+   love-notes.json, README.md, icons/). Commit.
+3. Settings → Pages → Deploy from a branch → main, / (root) → Save.
+4. Your link: https://YOUR-USERNAME.github.io/every-second-of-us/
 
-## 2. Fix the link preview (30 seconds)
-In `index.html`, near the top, find `YOUR-USERNAME` in the og:image line and
-replace it with your real GitHub Pages URL. This makes a pretty card show up
-when you send her the link on WhatsApp/iMessage. (Edit directly on GitHub:
-open index.html → pencil icon → change → commit.)
+## One quick edit
+In index.html near the top, replace YOUR-USERNAME in the og:image line with
+your real Pages URL (edit directly on GitHub: open file → pencil → commit).
+This makes the pretty preview card appear when you send her the link.
 
-## 3. Test on YOUR phone first
-- Open the link, add it to your home screen, open it from the icon.
-- Turn on airplane mode and open it again — it must still work.
-- Check the date, the messages, dark/light, the settings, the heart.
+## Updates are AUTOMATIC — no re-download, ever
+The app loads network-first when online: any commit you push to GitHub is
+live for her the next time she opens the app with internet. Offline she gets
+the last version. She never reinstalls anything.
+(Only exception: if you change the app ICON, she'd need to re-add it to her
+home screen to see the new icon.)
 
-## 4. Delete this file from the repo
-So the first thing she reads on the repo page is her README, not your notes.
+## Editing the secret notes WITHOUT me
+Open `love-notes.json` on GitHub → pencil icon → edit the "sweet" and/or
+"afterDark" text → commit. That's it. Her app picks it up next time she
+opens it online. Keep it valid JSON: text between the quotes, and if you
+want a quote character inside the note, write it as \" .
 
-## 5. Send it
-Best: send her the link with something like
-  "made you something. add it to your home screen. — N"
-Backup option (no GitHub needed): send her the single `index.html` file
-directly (WhatsApp/AirDrop/email) — it works opened from her phone or laptop
-as-is, offline, font and all. Only the home-screen icon install works best
-via the link.
+## Test on YOUR phone first
+- Install from the link, open from the icon.
+- Airplane mode → open again → must still work.
+- Drag the heartbeat slider to the top... you know why. Verify the whole
+  chain: chilli appears → hold it → After Dark unlocks → homescreen goes
+  crimson → new BPM stops → spicy quotes in rotation → 🌶️ button in the top
+  bar (hold it) → long-press the message → two-finger hold the background.
+- Long-press "Shady ♥ Nirsh" both before and after unlocking.
+- Open the trophy. Scroll to the end. Feel something. That's the point.
+- Settings → Reset everything → confirm it all comes back locked.
+
+## Sending it
+Send the LINK, not the zip. Suggested message:
+  "made you something. add it to your home screen. read the page below it. — N"
