@@ -19,6 +19,15 @@ the last version. She never reinstalls anything.
 (Only exception: if you change the app ICON, she'd need to re-add it to her
 home screen to see the new icon.)
 
+## words.json — the shared quote book (works for BOTH of you)
+Custom quotes written in the app live on that device. To make lines permanent
+on BOTH clocks: in the app, open "Your own words" and tap
+"Copy for GitHub" — then open `words.json` in the repo, hit the pencil,
+replace the contents with what's on the clipboard, commit. Next time either
+clock is online, it picks them up automatically. (Add Shady as a collaborator
+on the repo — Settings → Collaborators — so she can do this from her phone,
+or she can just send you the link/text and you commit it.)
+
 ## Editing the secret notes WITHOUT me
 Open `love-notes.json` on GitHub → pencil icon → edit the "sweet" and/or
 "afterDark" text → commit. That's it. Her app picks it up next time she
