@@ -1,0 +1,9 @@
+# 🌙 Shady's page — After Dark
+#
+# Same rules, different hours. These lines only appear when the lights are low.
+#   One line = one quote, in your yellow, on both our clocks.
+#   ...since to start, *stars* around one word to make it burn.
+#   Lines starting with # are invisible to the app.
+#
+# Write below this line, and commit when you're done:
+

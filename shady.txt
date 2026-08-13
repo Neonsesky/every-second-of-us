@@ -1,0 +1,11 @@
+# ♥ Shady's page — normal mode
+#
+# This file is yours, love. Only yours. Nothing you do here can touch his words.
+#
+# HOW IT WORKS
+#   One line = one quote, and it appears on BOTH our clocks, glowing in your buttercup yellow.
+#   Start each line with ...since  and wrap ONE word in *stars* to make it glow brighter.
+#   Lines starting with # (like these) are invisible to the app.
+#
+# Write below this line, and press the green "Commit changes" button when you're done:
+

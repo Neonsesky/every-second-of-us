@@ -1,0 +1,4 @@
+# 🌙 Nirsh's page — After Dark
+# One line = one quote in the After Dark rotation, in red. *stars* for the burn word.
+# Lines starting with # are ignored.
+

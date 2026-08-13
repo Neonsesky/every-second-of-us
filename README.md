@@ -40,9 +40,14 @@ can't touch us.
   heartbeat. Yes, the glow behind everything is beating. It's measured in
   real BPM, and every speed is a moment of ours. It defaults to 88 —
   *a heart in love.*
-- **Your own words** — in settings. Write your own lines and the clock will
-  say them back to you. One line per quote. Wrap a word in \*stars\* to make
-  it glow.
+- **Your own words** — in settings. You have your own page now, Shady — a
+  place where your lines live in your buttercup yellow, next to mine in red,
+  on both our clocks. Write in the app, tap **Add to Shady's page**, paste at
+  the bottom of the page that opens, hit the green button. That's it. Your
+  words can never be lost — not if the app is deleted, not if phones change.
+  They live where the clock lives.
+- **Whose words play** — also in settings: everyone's, only mine, or only
+  yours. Choose the voice the clock speaks in.
 - **🏆 Milestones** — everything we've reached, and everything we ever will.
   If you miss one, the app will tell you the next time it sees you. Once.
   Gently.

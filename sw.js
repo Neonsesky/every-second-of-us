@@ -1,13 +1,14 @@
 /* Shady ♥ Nirsh — offline-first, auto-updating */
-const CACHE = "sn-clock-v3";
+const CACHE = "sn-clock-v5";
 const PRECACHE = [
-  "./", "./index.html", "./manifest.webmanifest", "./love-notes.json", "./words.json",
+  "./", "./index.html", "./manifest.webmanifest", "./love-notes.json",
+  "./shady.txt", "./nirsh.txt", "./shady-afterdark.txt", "./nirsh-afterdark.txt",
   "./icons/icon-192.png", "./icons/icon-512.png",
   "./icons/apple-touch-icon.png", "./icons/favicon-32.png"
 ];
 /* these always try the network first, so Nirsh's GitHub edits arrive automatically;
    if she's offline, the last cached version loads instead */
-const NETWORK_FIRST = ["/", "/index.html", "/love-notes.json", "/words.json"];
+const NETWORK_FIRST = ["/", "/index.html", "/love-notes.json", "/shady.txt", "/nirsh.txt", "/shady-afterdark.txt", "/nirsh-afterdark.txt"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting()));

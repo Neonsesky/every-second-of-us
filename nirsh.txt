@@ -1,0 +1,4 @@
+# ♥ Nirsh's page — normal mode
+# One line = one quote on both clocks, in red. ...since to start, *stars* for the glow word.
+# Lines starting with # are ignored. The 52 built-in lines are also mine — these are extras.
+

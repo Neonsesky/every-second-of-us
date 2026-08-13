@@ -19,14 +19,28 @@ the last version. She never reinstalls anything.
 (Only exception: if you change the app ICON, she'd need to re-add it to her
 home screen to see the new icon.)
 
-## words.json — the shared quote book (works for BOTH of you)
-Custom quotes written in the app live on that device. To make lines permanent
-on BOTH clocks: in the app, open "Your own words" and tap
-"Copy for GitHub" — then open `words.json` in the repo, hit the pencil,
-replace the contents with what's on the clipboard, commit. Next time either
-clock is online, it picks them up automatically. (Add Shady as a collaborator
-on the repo — Settings → Collaborators — so she can do this from her phone,
-or she can just send you the link/text and you commit it.)
+## The word pages — her space and yours, permanent
+Four files, four voices:
+  shady.txt            → her lines, normal mode, buttercup yellow
+  shady-afterdark.txt  → her lines, After Dark
+  nirsh.txt            → your lines, normal mode, red
+  nirsh-afterdark.txt  → your lines, After Dark
+One quote per line; # lines are ignored; *stars* mark the glow word.
+Both clocks fetch all four automatically whenever they're online — so words
+survive app deletion, phone swaps, everything. She can NEVER affect your
+files and you can never affect hers: separate files, separate spaces.
+
+ONE-TIME SETUP (2 min): she makes a free GitHub account, you add her:
+repo → Settings → Collaborators → Add people → her username → she accepts
+the email invite. Done forever.
+
+The app does the heavy lifting: "Your own words" → write → "Add to Shady's
+page" copies the lines AND opens the exact GitHub edit page. She pastes at
+the bottom, hits the green Commit button. Both clocks update on their own.
+
+MIGRATION: if either phone has words saved from the old system, the app
+shows a "Saved only on this device" section with a copy-all button — paste
+those into the right page once and they're permanent.
 
 ## Editing the secret notes WITHOUT me
 Open `love-notes.json` on GitHub → pencil icon → edit the "sweet" and/or
