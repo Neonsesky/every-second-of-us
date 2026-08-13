@@ -1,6 +1,6 @@
 # ♥ Shady's page — normal mode
 #
-# This file is yours, love. Only yours. Nothing you do here can touch his words.
+# This file is yours, love. Only yours. Nothing you do here affects my words.
 #
 # HOW IT WORKS
 #   One line = one quote, and it appears on BOTH our clocks, glowing in your buttercup yellow.
@@ -8,4 +8,4 @@
 #   Lines starting with # (like these) are invisible to the app.
 #
 # Write below this line, and press the green "Commit changes" button when you're done:
-
+...test, this is a *test*
