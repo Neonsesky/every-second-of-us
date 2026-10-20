@@ -1,5 +1,5 @@
 /* Shady ♥ Nirsh — offline-first, auto-updating */
-const CACHE = "sn-clock-v5";
+const CACHE = "sn-clock-v6";
 const PRECACHE = [
   "./", "./index.html", "./manifest.webmanifest", "./love-notes.json",
   "./shady.txt", "./nirsh.txt", "./shady-afterdark.txt", "./nirsh-afterdark.txt",
