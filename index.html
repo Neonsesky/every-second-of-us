@@ -1618,18 +1618,25 @@ body.quaking .app { animation: quake 0.14s linear infinite; }
   addM(atDate(new Date(2027, 1, 14, 0, 0, 0)), "Our first Valentine's Day", "as if I needed a day for it", "crimson", "♥", { tex: "hearts", h: 352 });
   addM(atDate(addMonths(FIRST_DATE, 6)), "Half a year since 11:11", "", "rose", "✧", { tex: "stars", h: 300 });
   addM(atDate(addMonths(FIRST_DATE, 12)), "A year since 11:11", "make a wish. it already came true.", "gold", "✧", { tex: "stars", h: 36 });
-  /* Birthdays: add here as [name, month(1-12), day, firstYear] e.g. ["Shady", 3, 14, 2027] — they repeat for 5 years */
-  var BIRTHDAYS = [];
+  /* Birthdays: [name, month(1-12), day, birthYear] — the next five birthdays are generated */
+  var BIRTHDAYS = [["Shady", 6, 17, 2000], ["Nirsh", 6, 20, 2003]];
   BIRTHDAYS.forEach(function (b) {
-    for (var y = 0; y < 5; y++) {
-      addM(atDate(new Date(b[3] + y, b[1] - 1, b[2], 0, 0, 0)), b[0] + "'s birthday" + (y ? " (" + (y + 1) + ")" : ""), "the day the world got you", "gold", "✦", { tex: "sparkle", h: 330 });
+    for (var y = 2027; y <= 2031; y++) {
+      addM(atDate(new Date(y, b[1] - 1, b[2], 0, 0, 0)), b[0] + " turns " + (y - b[3]), y === 2027 ? "our first birthday together. I'm making it unforgettable." : "another year of you, another year of us", "gold", "✦", { tex: "sparkle", h: b[0] === "Shady" ? 50 : 318 });
     }
   });
   /* --- special: After Dark only (invisible until the lights go low) --- */
-  addM(69*DAY, "Sixty-nine days", "nice. you know exactly what I mean.", "crimson", "♥", { ad: true, tex: "stripes", h: 352 });
-  addM(6969*HR, "6,969 hours", "≈ 290 days. twice the fun.", "crimson", "♥", { ad: true, tex: "stripes", h: 346 });
-  addM(69*7*DAY, "Sixty-nine weeks", "I'd say it again. I would. repeatedly.", "crimson", "♥", { ad: true, tex: "waves", h: 356 });
-  addM(420*DAY, "420 days", "a little high on you", "crimson", "✧", { ad: true, tex: "waves", h: 150 });
+  [
+    [69*HR, "Sixty-nine hours", "nice. you know exactly what I mean.", "stripes", 352],
+    [6969*MIN, "6,969 minutes", "almost five days of 6 and 9. I'd like to practice.", "waves", 346],
+    [69*DAY, "Sixty-nine days", "sixty-nine days. say it out loud, love. then come show me.", "stripes", 352],
+    [690*HR, "690 hours", "a whole month of nothing but 6, 9, and you.", "waves", 356],
+    [6.9e6*SEC, "6.9 million seconds", "every one of them spent wanting you.", "stripes", 348],
+    [6969*HR, "6,969 hours", "twice the fun. I'd say it's about time we proved it.", "stripes", 346],
+    [69*7*DAY, "Sixty-nine weeks", "I'd say it again. I would. repeatedly. slowly.", "waves", 356],
+    [696*DAY, "696 days", "69, then 6. that's me, then you, then me again.", "stripes", 350],
+    [6969*DAY, "6,969 days", "nineteen years of us and I still want you like day one.", "stripes", 344]
+  ].forEach(function (x) { addM(x[0], x[1], x[2], "crimson", "♥", { ad: true, tex: x[3], h: x[4] }); });
 
   MILESTONES = MILESTONES.filter(function (m) { return m.ms > 0 && isFinite(m.ms); });
   MILESTONES.sort(function (a, b) { return a.ms - b.ms; });
@@ -1741,7 +1748,7 @@ body.quaking .app { animation: quake 0.14s linear infinite; }
     if (nextIdx < MILESTONES.length && elapsedMs >= MILESTONES[nextIdx].ms) {
       var m = MILESTONES[nextIdx];
       if (mVisible(m)) {
-        popupShow("a milestone, live", "right now, this second — <strong>" + m.t.toLowerCase() + "</strong> of you. ♥", 10000);
+        popupShow("a milestone, live", m.ad ? "<strong>" + m.t.toLowerCase() + "</strong>. " + m.s : "right now, this second — <strong>" + m.t.toLowerCase() + "</strong> of you. ♥", 10000);
         burstHearts(innerWidth / 2, innerHeight * 0.4, 14, true);
         ack = nextIdx; store.set("sn_ms_ack", String(ack));
       }
@@ -1799,7 +1806,7 @@ body.quaking .app { animation: quake 0.14s linear infinite; }
     if (reached > ack) {
       var mm = MILESTONES[reached];
       ack = reached; store.set("sn_ms_ack", String(ack));
-      popupShow("we reached a milestone, love", "while you were away, we passed <strong>" + mm.t.toLowerCase() + "</strong>. I felt it. ♥", 12000);
+      popupShow("we reached a milestone, love", mm.ad ? "while you were away, we passed <strong>" + mm.t.toLowerCase() + "</strong>. " + mm.s : "while you were away, we passed <strong>" + mm.t.toLowerCase() + "</strong>. I felt it. ♥", 12000);
       return;
     }
     /* 2) special minutes */
