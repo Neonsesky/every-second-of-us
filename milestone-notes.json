@@ -1,0 +1,46 @@
+{
+  "_help": "Nirsh: edit this file on GitHub anytime. 'notes' = a private note that opens when she taps a reached milestone (and pops up when it happens). 'reveals' = After Dark only, a slow line-by-line reveal. 'birthdays' = what pops up on that person's birthday. Keys must match the milestone title exactly. Avoid & and the … character (the handwriting font doesn't have them).",
+  "notes": {
+    "One week of us": "A week. Seven days of me checking if this is real. It is. It keeps being real. - N",
+    "One month": "One month ago I didn't know what your good morning would do to my whole day. Now I plan the day around it.",
+    "111 hours": "111 hours. Make a wish, Shady. I already made mine, and it's sitting next to me.",
+    "One million seconds": "A million seconds, and I'd hand over every single one of them again. Same terms.",
+    "100 days": "100 days. I'd say it feels like yesterday, but yesterday I didn't have you this long. Today I do.",
+    "100 days since 11:11": "June 11th, 11:11 pm. We asked each other the time and then the world quietly stepped aside. 100 days later I'm still standing exactly where you left me: next to you.",
+    "143 days": "I. Love. You. One letter, four letters, three. 143 days, and I'm going to spell it out for the rest of them.",
+    "Half a year": "Half a year of you. Half of one year, out of all the years I plan to have. Do the math, love, I'm just getting started.",
+    "Our first Valentine's Day": "I never needed a day to love you. But if the world insists on one, I'm giving this one to you. Every inch of it.",
+    "Our first new year": "Of all the countdowns I've ever done, this is the first one where I wasn't hoping for a new life. I already had the one I wanted.",
+    "Our first year": "One year. 31,557,600 seconds, and you were in every single one that mattered. Happy first of many, Shady.",
+    "A year since 11:11": "A year ago the time kept disappearing around us. Turns out it was making room for this. Make a wish, love. It already came true.",
+    "1,000 days": "1,000 days. If I wrote one reason for each, I'd run out of paper before I ran out of reasons.",
+    "Two years": "Two years in and I still get that little jolt when your name lights up my phone. Don't you dare fix it.",
+    "Five years": "Five years. We built a whole life out of small seconds. Look at it. Look at what we made.",
+    "A decade of us": "A decade. You've seen me at my worst and stayed for my average. I'd say that's real love. - N",
+    "Ten thousand days": "Ten thousand days. Nobody gets to keep this long, so I'm saying it plainly: I chose you every single one of them."
+  },
+  "reveals": {
+    "Sixty-nine hours": ["sixty-nine hours.", "you know what that number means.", "i've been thinking about it all day.", "come find out how much."],
+    "690 hours": ["690 hours.", "a whole month of 6, 9, and you.", "and i haven't had nearly enough of any of them."],
+    "Sixty-nine days": ["sixty-nine days.", "...say it out loud, love.", "go on. i'll wait.", "now think about me saying it back.", "slowly.", "close the door. this one's ours."],
+    "6.9 million seconds": ["6,900,000 seconds.", "and every one of them, wanting you.", "especially the ones when you weren't looking."],
+    "6,969 hours": ["6,969 hours.", "twice the fun. i did the math.", "you know what comes next.", "so do i."],
+    "Sixty-nine weeks": ["sixty-nine weeks.", "i'd say it again.", "i would.", "repeatedly.", "slowly.", "starting tonight."],
+    "696 days": ["696 days.", "69... then 6.", "that's me. then you. then me again.", "i'm not done."],
+    "6,969 days": ["6,969 days.", "nineteen years of us.", "and i still want you the way i did the first night.", "maybe more.", "come here."]
+  },
+  "birthdays": {
+    "Shady": [
+      "Happy birthday, my love. The world got you today and I got lucky enough to be the one counting. Today every second is yours.",
+      "Today the clock runs on your time, Shady. Happy birthday. You are the best thing that ever happened to my seconds."
+    ],
+    "Nirsh": [
+      "It's his birthday, love. Tell him. He's been counting every second of you since June 19th.",
+      "Today is Nirsh's day. Happy birthday to the one who made this clock just to prove how much he adores you."
+    ]
+  },
+  "birthdaysAD": {
+    "Shady": "and tonight, birthday girl, you get whatever you ask for. anything. just say the word.",
+    "Nirsh": "and tonight, he's all yours. wrap him up and do what you like with him."
+  }
+}

@@ -497,6 +497,26 @@ body[data-tex="waves"] .era-tex { -webkit-mask-image: url("data:image/svg+xml,%3
 }
 .ms-item .era-dot { margin-left: auto; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; background: var(--dot, var(--accent)); }
 
+/* ---------- milestone notes + slow reveal ---------- */
+.ms-item.has-note { cursor: pointer; }
+.ms-item .note-mark { margin-left: auto; font-size: 15px; color: var(--accent); flex-shrink: 0; }
+.ms-item .note-mark + .era-dot { margin-left: 8px; }
+#revealVeil {
+  position: fixed; inset: 0; z-index: 96; display: none; place-items: center; text-align: center;
+  background: radial-gradient(ellipse at 50% 60%, rgba(60, 4, 14, 0.96), rgba(6, 1, 3, 0.99));
+  padding: 8vw; cursor: pointer; opacity: 0; transition: opacity 1.4s ease;
+}
+#revealVeil.show { display: grid; }
+#revealVeil.in { opacity: 1; }
+#revealVeil .rv-lines { display: flex; flex-direction: column; gap: 22px; max-width: 560px; }
+#revealVeil .rv-line {
+  font-family: var(--font-hand); font-size: clamp(24px, 6.4vw, 38px); line-height: 1.25;
+  color: #ffd9de; opacity: 0; transform: translateY(8px); filter: blur(6px);
+  transition: opacity 2.2s ease, transform 2.2s ease, filter 2.2s ease;
+  text-shadow: 0 0 22px rgba(255, 36, 64, 0.55);
+}
+#revealVeil .rv-line.on { opacity: 1; transform: none; filter: none; }
+#revealVeil .rv-hint { position: absolute; bottom: 7vh; left: 0; right: 0; font-size: 12px; color: rgba(255, 217, 222, 0.45); letter-spacing: 0.12em; }
 /* ---------- floating hearts (nice ones) ---------- */
 .float-heart {
   position: fixed; z-index: 80; pointer-events: none;
@@ -654,6 +674,7 @@ body.quaking .app { animation: quake 0.14s linear infinite; }
 <div class="era-tex" id="eraTex" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 <div id="whisperVeil" aria-hidden="true"></div>
+<div id="revealVeil" role="dialog" aria-label="A slow message"><div class="rv-lines" id="rvLines"></div><div class="rv-hint" id="rvHint">tap to go faster</div></div>
 <div id="steamWrap" aria-hidden="true"></div>
 
 <main class="app">
@@ -1641,6 +1662,79 @@ body.quaking .app { animation: quake 0.14s linear infinite; }
   MILESTONES = MILESTONES.filter(function (m) { return m.ms > 0 && isFinite(m.ms); });
   MILESTONES.sort(function (a, b) { return a.ms - b.ms; });
 
+  /* --- personal notes, slow reveals, birthday messages (milestone-notes.json) --- */
+  var MS_FILE = { notes: {}, reveals: {}, birthdays: {}, birthdaysAD: {} };
+  function msNote(m) { return MS_FILE.notes[m.t] || ""; }
+  function msReveal(m) { return m.ad ? (MS_FILE.reveals[m.t] || null) : null; }
+  function loadMsFile() {
+    return fetch("./milestone-notes.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (j) {
+      ["notes", "reveals", "birthdays", "birthdaysAD"].forEach(function (k) { if (j && j[k]) MS_FILE[k] = j[k]; });
+      if (document.getElementById("msSheet").classList.contains("open")) renderMilestones();
+    }).catch(function () {});
+  }
+  var rvTimers = [], rvDone = false;
+  function revealClose() {
+    var v = document.getElementById("revealVeil"); v.classList.remove("in");
+    rvTimers.forEach(clearTimeout); rvTimers = [];
+    setTimeout(function () { v.classList.remove("show"); document.getElementById("rvLines").innerHTML = ""; }, 1400);
+  }
+  function slowReveal(lines) {
+    var v = document.getElementById("revealVeil"), box = document.getElementById("rvLines"), hint = document.getElementById("rvHint");
+    rvTimers.forEach(clearTimeout); rvTimers = []; rvDone = false;
+    box.innerHTML = ""; hint.textContent = "tap to go faster";
+    var els = lines.map(function (t) { var d = document.createElement("div"); d.className = "rv-line"; d.textContent = t; box.appendChild(d); return d; });
+    v.classList.add("show"); void v.offsetWidth; v.classList.add("in");
+    var shown = 0;
+    function next() {
+      if (shown < els.length) { els[shown++].classList.add("on"); if (shown === els.length) { rvDone = true; hint.textContent = "tap to close"; } else rvTimers.push(setTimeout(next, 3400)); }
+    }
+    rvTimers.push(setTimeout(next, 1800));
+    v.onclick = function () {
+      if (rvDone) { revealClose(); return; }
+      rvTimers.forEach(clearTimeout); rvTimers = []; next(); if (!rvDone) rvTimers.push(setTimeout(next, 3400));
+    };
+  }
+  /* what happens when a milestone lands (live or while she was away) */
+  function celebrateMilestone(m, live) {
+    var rv = msReveal(m);
+    if (rv && isAD()) { slowReveal(rv); return; }
+    var n = msNote(m);
+    if (n) { popupShow((live ? "a milestone, live: " : "while you were away: ") + m.t.toLowerCase(), n, 0); return; }
+    if (live) popupShow("a milestone, live", m.ad ? "<strong>" + m.t.toLowerCase() + "</strong>. " + m.s : "right now, this second — <strong>" + m.t.toLowerCase() + "</strong> of you. ♥", 10000);
+    else popupShow("we reached a milestone, love", m.ad ? "while you were away, we passed <strong>" + m.t.toLowerCase() + "</strong>. " + m.s : "while you were away, we passed <strong>" + m.t.toLowerCase() + "</strong>. I felt it. ♥", 12000);
+  }
+  document.getElementById("msList").addEventListener("click", function (e) {
+    var it = e.target.closest ? e.target.closest(".ms-item") : null;
+    if (!it || !it.classList.contains("has-note")) return;
+    var m = MILESTONES[parseInt(it.getAttribute("data-i"), 10)]; if (!m) return;
+    var rv = msReveal(m);
+    closeSheets();
+    setTimeout(function () {
+      if (rv && isAD()) slowReveal(rv); else popupShow(m.t.toLowerCase(), msNote(m), 0);
+    }, 350);
+  });
+  /* birthdays: once per person per year, on the day */
+  var bdayPending = null;
+  function birthdayToday() {
+    var now = new Date();
+    for (var i = 0; i < BIRTHDAYS.length; i++) {
+      var b = BIRTHDAYS[i];
+      if (now.getMonth() === b[1] - 1 && now.getDate() === b[2]) return b;
+    }
+    return null;
+  }
+  function birthdayCheckPending() {
+    var b = birthdayToday(); if (!b) return;
+    var k = "sn_bday_" + b[0] + "_" + new Date().getFullYear();
+    if (store.get(k)) return;
+    var list = MS_FILE.birthdays[b[0]]; if (!list || !list.length) return;
+    store.set(k, "1");
+    var age = new Date().getFullYear() - b[3];
+    var txt = pick(list) + (isAD() && MS_FILE.birthdaysAD[b[0]] ? "<br><br>" + MS_FILE.birthdaysAD[b[0]] : "");
+    popupShow("happy birthday, " + b[0].toLowerCase() + " · " + age, txt, 0);
+    heartBloom();
+  }
+
   /* --- eras: every milestone carries its own look --- */
   var TIER_LOOK = {
     rose:    { h: 342, tex: "dots",    heart: "♥" },
@@ -1716,17 +1810,19 @@ body.quaking .app { animation: quake 0.14s linear infinite; }
   function renderMilestones() {
     var list = document.getElementById("msList");
     list.innerHTML = "";
-    MILESTONES.forEach(function (m) {
+    MILESTONES.forEach(function (m, mi) {
       if (!mVisible(m)) return;
       var done = elapsedMs >= m.ms;
       var el = document.createElement("div");
-      el.className = "ms-item tier-" + m.tier + (done ? " done" : " locked");
+      var hasNote = done && (msNote(m) || (m.ad && msReveal(m)));
+      el.setAttribute("data-i", mi);
+      el.className = "ms-item tier-" + m.tier + (done ? " done" : " locked") + (hasNote ? " has-note" : "");
       var sub = m.s || "";
       if (m.ms < 200 * YR) {
         var d = msDate(m.ms);
         sub = (sub ? sub + " · " : "") + (done ? "reached " : "") + d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
       }
-      el.innerHTML = '<div class="ico">' + (done ? m.ico : em("lock")) + '</div><div><div class="t">' + m.t + '</div><div class="s">' + sub + "</div></div>" + (done ? '<span class="era-dot" style="--dot:' + hsl(m.look.h, 100, 62) + '"></span>' : "");
+      el.innerHTML = '<div class="ico">' + (done ? m.ico : em("lock")) + '</div><div><div class="t">' + m.t + '</div><div class="s">' + sub + "</div></div>" + (hasNote ? '<span class="note-mark" aria-label="has a note">✉</span>' : "") + (done ? '<span class="era-dot" style="--dot:' + hsl(m.look.h, 100, 62) + '"></span>' : "");
       list.appendChild(el);
     });
   }
@@ -1748,7 +1844,7 @@ body.quaking .app { animation: quake 0.14s linear infinite; }
     if (nextIdx < MILESTONES.length && elapsedMs >= MILESTONES[nextIdx].ms) {
       var m = MILESTONES[nextIdx];
       if (mVisible(m)) {
-        popupShow("a milestone, live", m.ad ? "<strong>" + m.t.toLowerCase() + "</strong>. " + m.s : "right now, this second — <strong>" + m.t.toLowerCase() + "</strong> of you. ♥", 10000);
+        celebrateMilestone(m, true);
         burstHearts(innerWidth / 2, innerHeight * 0.4, 14, true);
         ack = nextIdx; store.set("sn_ms_ack", String(ack));
       }
@@ -1801,12 +1897,15 @@ body.quaking .app { animation: quake 0.14s linear infinite; }
     var now = new Date();
     var h = now.getHours(), m = now.getMinutes();
 
-    /* 1) milestone catch-up beats everything */
+    /* 0) birthdays beat everything */
+    var bd = birthdayToday();
+    if (bd && !store.get("sn_bday_" + bd[0] + "_" + now.getFullYear()) && MS_FILE.birthdays[bd[0]] && MS_FILE.birthdays[bd[0]].length) { birthdayCheckPending(); return; }
+    /* 1) milestone catch-up beats everything else */
     var reached = highestReachedIndex();
     if (reached > ack) {
       var mm = MILESTONES[reached];
       ack = reached; store.set("sn_ms_ack", String(ack));
-      popupShow("we reached a milestone, love", mm.ad ? "while you were away, we passed <strong>" + mm.t.toLowerCase() + "</strong>. " + mm.s : "while you were away, we passed <strong>" + mm.t.toLowerCase() + "</strong>. I felt it. ♥", 12000);
+      celebrateMilestone(mm, false);
       return;
     }
     /* 2) special minutes */
@@ -1827,7 +1926,7 @@ body.quaking .app { animation: quake 0.14s linear infinite; }
       popupShow(kick, line, 10000);
     }
   }
-  setTimeout(openingPopup, 2500);
+  loadMsFile().then(function () { setTimeout(openingPopup, 2500); });
 
   /* ================= monthiversary / anniversary ================= */
   var eyebrow = document.getElementById("eyebrow");
